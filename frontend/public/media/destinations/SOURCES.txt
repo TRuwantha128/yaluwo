@@ -1,0 +1,161 @@
+Where each photo came from (your web.zip). Add the photographer or website here if you need to credit it.
+
+arugam/1.webp  <-  ampara/Arugambay/arugambe.jpg
+arugam/2.webp  <-  ampara/Arugambay/8db18a288509b89d31ed3d0991e546ef.jpg
+arugam/3.webp  <-  ampara/Arugambay/Arugam-Bay-Beach-900x600.jpeg   [small original]
+elephant-rock/1.webp  <-  ampara/Arugambay/elephant-rock.jpg   [small original]
+kumana/1.webp  <-  ampara/kumana national park.jpg
+senanayake-samudra/1.webp  <-  ampara/Senanayake_Samudra_views.jpg
+buddhangala/1.webp  <-  ampara/buddangala.jpg
+anuradhapura/1.webp  <-  anauradapura/ruvanvalisaya.jpg
+mihintale/1.webp  <-  anauradapura/Mihinthale_2.jpg
+mihintale/2.webp  <-  anauradapura/mihintale.webp   [small original]
+kaludiya-pokuna/1.webp  <-  anauradapura/Kaludiya Pokuna ( black water Pond ).webp   [small original]
+kaludiya-pokuna/2.webp  <-  vavuniya/Kaludiya Pokuna Archaeological Site.jpg
+kuttam-pokuna/1.webp  <-  anauradapura/Kuttam pokuna.webp   [small original]
+abhayagiri/1.webp  <-  anauradapura/Abhayagiriya Museum.webp   [small original]
+kala-wewa/1.webp  <-  anauradapura/Kalawewa National Park.webp   [small original]
+nine-arch/1.webp  <-  badulla/hendrik-cornelissen-jpTT_SAU034-unsplash.jpg
+nine-arch/2.webp  <-  badulla/Ella Sri Lanka/Nine-Arch-Bridge-Ella-Sri-Lanka-35-1.jpg
+nine-arch/3.webp  <-  badulla/Ella Sri Lanka/1688556866_Ella-Ueberblick.jpg   [small original]
+ella/1.webp  <-  badulla/Ella Sri Lanka/ella.jpg   [small original]
+ella/2.webp  <-  badulla/Ella Sri Lanka/ella-town-sri-lanka.jpg
+ella/3.webp  <-  badulla/Ella Sri Lanka/srilanka-2792097_1280 (1).jpg
+ella/4.webp  <-  badulla/Ella Sri Lanka/wp11466618.jpg
+ella/5.webp  <-  badulla/Ella Sri Lanka/ella1.jpg   [small original]
+ella-rock/1.webp  <-  badulla/Ella Sri Lanka/ella rock.jpg
+haputale/1.webp  <-  badulla/Haputale/Haputale-02.jpeg
+haputale/2.webp  <-  badulla/Haputale/sri-lanka-5769883_1280.jpg
+haputale/3.webp  <-  badulla/Haputale/trains-5227361_1280.jpg
+haputale/4.webp  <-  badulla/Haputale/3f2c1dbbf6d3a2f878beb19b97201b64.jpg
+dunhinda/1.webp  <-  badulla/Dunhinda.jpg
+madulsima/1.webp  <-  monaragala/madulsima mini world end.jpg
+batticaloa/1.webp  <-  Batticaloa/Batticaloa_Portuguese_fort.jpg
+pasikudah/1.webp  <-  Batticaloa/Pasikudah.jpg
+colombo/1.webp  <-  colombo/Colombo/Colombo & rs.jpg
+colombo/2.webp  <-  colombo/Colombo/fussgaengerbruecke-port-city.jpg
+colombo/3.webp  <-  colombo/Colombo/Beddagana.jpeg   [small original]
+lotus-tower/1.webp  <-  colombo/lotustower.jpg
+gangaramaya/1.webp  <-  colombo/Gangaramaya_Temple_(Rows_of_Buddhas).jpg
+beddagana/1.webp  <-  colombo/Colombo/53f249d0834aa15ee9b172ed959424b9.jpg
+beddagana/2.webp  <-  colombo/Colombo/20250202d600d8985c7e4569baf21a01ade2e9f2_ChkhgeE007005_20250202_CBMFN0A002.jpeg   [small original]
+beddagana/3.webp  <-  colombo/Colombo/file-1775711073.jpg
+beddagana/4.webp  <-  colombo/Colombo/Beddagana.jpg
+galle/1.webp  <-  galle/cWq86Yb0Bc_O7KZmR62sWG1BNe7zqyIvmDH9VgInNPN7l9wH0tC4kyhVPcuPArAsHy0YPzAGm4T5M0EggHe3MtLeB4nDPco5Cs00jsn_bOHzYy8Teby3ejyIZPROtWORlF9zmJr_s75a8p8YFh52M6yhiv4y1xZ3MvMqvk4xOTMzF9P-1uDsVN0Zw8OQNOIg.jpg   [small original]
+galle/2.webp  <-  galle/Galle_Fort_Pano.jpg
+unawatuna/1.webp  <-  galle/Unawatuna/unawatuna-best-beach-sri-lanka.jpg   [small original]
+unawatuna/2.webp  <-  galle/Unawatuna/01.jpg   [small original]
+unawatuna/3.webp  <-  galle/Unawatuna/Unawatuna Beach in Sri Lanka (3).jpg
+unawatuna/4.webp  <-  galle/Unawatuna/things-to-do-unawatuna-sri-lanka-beach-header.jpg
+unawatuna/5.webp  <-  galle/Unawatuna/unawatuna.jpg
+jungle-beach/1.webp  <-  galle/Unawatuna/Jungle-Beach-Unawatuna-1024x674.jpg   [small original]
+thalpe/1.webp  <-  galle/Thalpe/Thalpe_Beach_Photos_By_360viewlk-7-of-11-1.jpg
+thalpe/2.webp  <-  galle/Thalpe/Thalpe-Beach-2.jpg
+thalpe/3.webp  <-  galle/Thalpe/Thalpe-Beach-Ijpg_gallery_15540.jpeg   [small original]
+thalpe/4.webp  <-  galle/Thalpe/nMfMnd9nPdHoFMM7axXumZspp38ViYnKivpDihjH.jpg   [small original]
+thalpe/5.webp  <-  galle/Thalpe/peace-sunset-in-thalpe-beach-1776224961.jpg   [small original]
+hikkaduwa/1.webp  <-  galle/hikkaduwa.jpg
+koggala/1.webp  <-  galle/kogala lake.jpg
+kelaniya/1.webp  <-  gampaha/Kelaniya_AS1 (1).jpg   [small original]
+kelaniya/2.webp  <-  gampaha/Kelaniya-3.jpg   [small original]
+muthurajawela/1.webp  <-  gampaha/Muthurajawela Marsh.jpg
+yala/1.webp  <-  hambantota/yala.jpg
+yala/2.webp  <-  hambantota/unnamed.webp   [small original]
+yala/3.webp  <-  hambantota/yala national park.webp
+bundala/1.webp  <-  hambantota/Bundala_National_Park111.jpg   [small original]
+bundala/2.webp  <-  hambantota/Bundala_National_Park.jpg
+nallur/1.webp  <-  jaffna/Nallur_Kandasamy_front_entrance.jpg   [small original]
+nallur/2.webp  <-  jaffna/nallur.jpg
+nallur/3.webp  <-  jaffna/pexels-ramkrishnaiyengar-22890480.jpg
+jaffna-fort/1.webp  <-  jaffna/Jaffna_Fort_(1).jpg
+kalutara-bodhiya/1.webp  <-  kalutara/Kalautara_Bodhiya_1.jpg
+richmond-castle/1.webp  <-  kalutara/Richmond_Castle_front.jpg
+temple-of-the-tooth/1.webp  <-  kandy/temple of the truth.jpg
+temple-of-the-tooth/2.webp  <-  kandy/Kandy(Kandy,Nelligala)/Dalada-Maligawa-Kandy-Sri-Lanka.jpg   [small original]
+temple-of-the-tooth/3.webp  <-  kandy/Kandy(Kandy,Nelligala)/wp7478286.jpg
+temple-of-the-tooth/4.webp  <-  kandy/Kandy(Kandy,Nelligala)/Kandy.jpg
+kandy/1.webp  <-  kandy/kandy lake.jpg
+kandy/2.webp  <-  kandy/Kandy(Kandy,Nelligala)/7397533.jpg
+kandy/3.webp  <-  kandy/Kandy(Kandy,Nelligala)/The-Best-Things-to-Do-in-Kandy-Sri-Lanka.jpg
+peradeniya/1.webp  <-  kandy/Botanical_Garden_of_Peradeniya_03.jpg
+nelligala/1.webp  <-  kandy/Kandy(Kandy,Nelligala)/nelligala-international.jpg   [small original]
+nelligala/2.webp  <-  kandy/Kandy(Kandy,Nelligala)/899eccb056ba1a16f7faa1435b786fde.jpg
+knuckles/1.webp  <-  kandy/Knuckles Mountain Range/Knuckles-Mountain-Range.jpg   [small original]
+knuckles/2.webp  <-  kandy/Knuckles Mountain Range/e6e07c448fa46cc2691a7c91f6dbee48.jpg   [small original]
+knuckles/3.webp  <-  kandy/Knuckles Mountain Range/Knuckles-4-1.jpg   [small original]
+meemure/1.webp  <-  kandy/Meemure/Meemure (1).jpg   [small original]
+meemure/2.webp  <-  kandy/Meemure/meemure-seven-falls-dscf8363-1200_orig.jpg
+meemure/3.webp  <-  kandy/Meemure/meemure-dscf8243-1200_orig.jpg
+meemure/4.webp  <-  kandy/Meemure/meemure.jpg
+pinnawala/1.webp  <-  kagalle/pinnavala.jpg
+bible-rock/1.webp  <-  kagalle/bibble rock.webp
+elephant-pass/1.webp  <-  kilinochchi/Elephant_Pass_Monument_(31451618868).jpg
+iranamadu/1.webp  <-  kilinochchi/Iranamadu_Tank2.jpg
+athugala/1.webp  <-  kurunegala/Athugala_Kurunegala.png   [small original]
+ridi-viharaya/1.webp  <-  kurunegala/Ridi_Vihara_(13).jpg
+yapahuwa/1.webp  <-  kurunegala/yapahuva.jpg
+baobab/1.webp  <-  mannar/Baobab_Tree_in_Mannar_2023-05-26-1.jpg
+talaimannar/1.webp  <-  mannar/Talaimannar_pier.jpg
+sigiriya/1.webp  <-  matale/segiriya.jpg
+riverston/1.webp  <-  matale/riverston.jpg
+sembuwatta/1.webp  <-  matale/Sembuwaththa/1024px-Sembuwatte_Lake_Matale-1024x675.jpg   [small original]
+sembuwatta/2.webp  <-  matale/Sembuwaththa/sembuwatta-lake-mathale.jpg   [small original]
+sembuwatta/3.webp  <-  matale/Sembuwaththa/b0b54d5c2fd30183268c6d160bbc53fb.jpg   [small original]
+sembuwatta/4.webp  <-  matale/Sembuwaththa/IMG_1166.jpg   [small original]
+mirissa/1.webp  <-  matara/Mirissa/e67b18f636852de9ca74b734503ac466.jpg
+mirissa/2.webp  <-  matara/Mirissa/215904-sri-lanka-mirissa-sunset-and-sea-hd.jpg
+mirissa/3.webp  <-  matara/Mirissa/1691497505_cms001.jpg   [small original]
+mirissa/4.webp  <-  matara/Mirissa/Surfing-in-Mirissa-1-960x692.jpg   [small original]
+mirissa/5.webp  <-  matara/Mirissa/sri-lanka-mirissa-beach-palms-sdtwfp2bsbtq3xb8 (1).jpg
+mirissa/6.webp  <-  matara/Mirissa/whale watching.jpg
+coconut-tree-hill/1.webp  <-  matara/Mirissa/famous-coconut-tree-hill-in-mirissa-sri-lanka-beach-next-to-the-indian-ocean.jpg
+coconut-tree-hill/2.webp  <-  matara/Mirissa Beach and Coconut Tree Hill.jpg
+coconut-tree-hill/3.webp  <-  matara/Mirissa/The-right-time-to-visit-Mirissa-is-to-enjoy-everything-the-place-has-to-offer.jpg   [small original]
+hiriketiya/1.webp  <-  matara/Hriketiya/Hiriketiya-Beach-8-1080x608.jpg   [small original]
+hiriketiya/2.webp  <-  matara/Hriketiya/Hiriketiya-07.jpg
+hiriketiya/3.webp  <-  matara/Hriketiya/bee9c9edbe0c8505c55f6e2eb5ece561.jpg
+hiriketiya/4.webp  <-  matara/Hriketiya/ec39514391cdcb6728e2010f5aec80dd.jpg
+hiriketiya/5.webp  <-  matara/Hriketiya/hiriketiya_beach_srilanka.jpg
+dondra/1.webp  <-  matara/Dondra Head Lighthouse.jpg
+nayaru/1.webp  <-  mulativ/Nayaru Beach.png
+nuwara/1.webp  <-  nuwara eliya/Nuwaraeliya/11885925.jpg
+nuwara/2.webp  <-  nuwara eliya/Nuwaraeliya/1690189284623-Nuwaraeliya-min-min.jpg
+nuwara/3.webp  <-  nuwara eliya/Nuwaraeliya/High-Tea.-Nuwara-Eliya.jpg
+nuwara/4.webp  <-  nuwara eliya/Nuwaraeliya/Nuwara-Eliya-attractions-5.jpg
+nuwara/5.webp  <-  nuwara eliya/Nuwaraeliya/Nuwara-Eliya-strawberry-farms-and-picking-experiences-3.jpg
+nuwara/6.webp  <-  nuwara eliya/Nuwaraeliya/best-places-to-visit-in-Nuwara-Eliya.jpg
+nuwara/7.webp  <-  nuwara eliya/Nuwaraeliya/exabyp-e1615911405834 (1).jpg
+nuwara/8.webp  <-  nuwara eliya/Nuwaraeliya/15979547-female-worker-at-tea-plantation-nuwara-eliya.jpg
+lake-gregory/1.webp  <-  nuwara eliya/Lake_Gregory.jpg
+lake-gregory/2.webp  <-  nuwara eliya/Nuwaraeliya/Lake-Nuwara-Eliya-Sri-Lanka-2.jpg
+horton/1.webp  <-  nuwara eliya/Horton Plains/sri-lanka-horton-plains-35.jpg
+horton/2.webp  <-  nuwara eliya/Horton Plains/140958692Nuwara_Eliya_Harton_Plains.jpg   [small original]
+horton/3.webp  <-  nuwara eliya/Horton Plains/Horton-Plain-National-Park-Trek-Things-to-do-in-Nuwara-Eliya.jpg   [small original]
+horton/4.webp  <-  nuwara eliya/Horton Plains/horton10-min.jpg
+horton/5.webp  <-  nuwara eliya/Horton Plains/horton-plains-uitzicht.jpg   [small original]
+horton/6.webp  <-  nuwara eliya/Horton Plains/2-sambar-deer-horton-plains-national-park-sri-lanka-jenny-rainbow.jpg   [small original]
+horton/7.webp  <-  nuwara eliya/Horton Plains/Pale-Blue-Flycatcher_DSC1700-Enhanced-NR_Horton-Plains-Sri-Lanka-Mar-19-2025.jpg
+horton/8.webp  <-  nuwara eliya/Horton Plains/164c06f5d39efcb9012741b55b355b86.jpg
+ambewela/1.webp  <-  nuwara eliya/Ambewela_Aitken_Spence_Wind_Farm.jpg
+polonnaruwa/1.webp  <-  polonnaruwa/polonnaruwa ancient city.jpg   [small original]
+gal-vihara/1.webp  <-  polonnaruwa/Gal_Vihara-_Reclining_image(js).jpg
+minneriya/1.webp  <-  polonnaruwa/Skyline_in_the_Minneriya_national_park.jpg
+parakrama-samudra/1.webp  <-  polonnaruwa/The_Delightful_Sunset_in_Parakrama_Samudra.jpg
+wilpattu/1.webp  <-  puttalama/WilpattuNationalPark-April2014_(1).jpg
+adams/1.webp  <-  ratnapura/Sri Pada (Adam's Peak).jpg   [small original]
+adams/2.webp  <-  ratnapura/3525106304_36c0921363.jpg   [small original]
+sinharaja/1.webp  <-  Sinharaja Rain Forest(Spans across Ratnapura, Galle, and Kalutara Districts)/sinharaja-4-1024x683.jpg   [small original]
+sinharaja/2.webp  <-  Sinharaja Rain Forest(Spans across Ratnapura, Galle, and Kalutara Districts)/sinharaja-2-1.jpg   [small original]
+sinharaja/3.webp  <-  Sinharaja Rain Forest(Spans across Ratnapura, Galle, and Kalutara Districts)/Sinharaja 1.jpg   [small original]
+sinharaja/4.webp  <-  Sinharaja Rain Forest(Spans across Ratnapura, Galle, and Kalutara Districts)/eab551c472de16df9f3af59e0a492ce5.jpg   [small original]
+belihuloya/1.webp  <-  ratnapura/Belihuloya/02-1.jpg
+belihuloya/2.webp  <-  ratnapura/Belihuloya/Belihuloya.jpg
+belihuloya/3.webp  <-  ratnapura/Belihuloya/16.jpg
+koneswaram/1.webp  <-  trincomali/Koneswaram_temple_of_Trincomalee_01.jpg
+pigeon-island/1.webp  <-  trincomali/Pigeon_Island_National_Park.jpg
+vavuniya-museum/1.webp  <-  vavuniya/Archaeological_Museum,_Vavuniya.jpg
+kandasamy-kovil/1.webp  <-  vavuniya/Kandasamy Kovil.jpg
+
+Not used:
+  web/gampaha/Kelaniya_AS1.JPG  (Same photo as Kelaniya_AS1 (1).jpg, smaller)
+  web/nuwara eliya/Nuwaraeliya/360_F_706182196_hfAXN3jxvoRVCrE4DylB92CH0KP0TiZz.jpg  (Adobe Stock preview (360_F_...), needs a licence and is only 360 px tall)
