@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /me
+Disallow: /messages
+Disallow: /partner
+Disallow: /pay/
+Disallow: /settings/
+Disallow: /verify
+Disallow: /reset-password/
+Disallow: /not-me/
+
+Sitemap: https://tharinduruwantha.dev/sitemap.xml
