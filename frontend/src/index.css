@@ -246,3 +246,7 @@ h2, h3 { letter-spacing: -0.015em; }
 .ylw-stop { writing-mode: horizontal-tb; }
 .maplibregl-ctrl-group { border-radius: 12px !important; overflow: hidden; }
 .maplibregl-cooperative-gesture-screen { font-family: var(--font-sans); }
+
+/* Home hero: each photo eases in very slowly while it is on screen */
+@keyframes hero-drift { from { transform: scale(1.0); } to { transform: scale(1.07); } }
+.hero-drift { animation: hero-drift 9s ease-out forwards; }

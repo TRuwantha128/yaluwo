@@ -5,7 +5,7 @@ import { Eyebrow, SectionTitle, btn } from '../ui'
 import TripCard from '../TripCard'
 import EmptyTrips from '../EmptyTrips'
 import { NEXT_MONTHS, rs } from '../../lib/format'
-import { PLACES } from '../../lib/places'
+import { DISTRICT_BY_ID, PLACE_BY_ID, PLACES, placeUrl } from '../../lib/places'
 import { settingOf, useConfig } from '../../config/useConfig'
 
 const SORTED_PLACES = [...PLACES].sort((a, b) => a.name.localeCompare(b.name))
@@ -103,6 +103,45 @@ export function HowItWorks() {
   )
 }
 
+// ---------- Places worth the drive: a wall of the site's own photos ----------
+// [place id, photo number, grid shape on a desktop]
+const WALL = [
+  ['mirissa', 3, 'lg:col-span-2 lg:row-span-2'],
+  ['temple-of-the-tooth', 1, ''],
+  ['thalpe', 1, ''],
+  ['ella', 1, 'lg:col-span-2'],
+  ['yala', 1, ''],
+  ['unawatuna', 1, 'lg:row-span-2'],
+  ['knuckles', 1, 'lg:col-span-2'],
+  ['galle', 1, ''],
+  ['sinharaja', 1, ''],
+]
+  .map(([id, n, shape]) => ({ place: PLACE_BY_ID[id], photo: PLACE_BY_ID[id]?.photos?.[n - 1], shape }))
+  .filter((x) => x.photo)
+
+export function PhotoWall() {
+  return (
+    <section className="wrap py-24">
+      <div className="flex flex-wrap items-end justify-between gap-6">
+        <SectionTitle eyebrow="Destinations" title="Places worth the drive" text={`${PLACES.length} beaches, peaks, temples and parks, each with real photos. Tap one to see more and add it to your route.`} />
+        <Link to="/places" className={btn.ghost}>See all places</Link>
+      </div>
+      <div className="mt-12 grid auto-rows-[11rem] grid-cols-2 gap-3 sm:auto-rows-[13rem] lg:grid-cols-4 lg:gap-4">
+        {WALL.map(({ place, photo, shape }) => (
+          <Link key={place.id} to={placeUrl(place)} className={`group relative isolate overflow-hidden rounded-3xl bg-night ${shape}`} style={{ backgroundColor: photo.c }}>
+            <img src={shape.includes('row-span-2') && shape.includes('col-span-2') ? photo.src : photo.sm} alt="" loading="lazy" className="absolute inset-0 -z-10 h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />
+            <span className="absolute inset-0 -z-10 bg-gradient-to-t from-night/85 via-night/5 to-transparent" />
+            <span className="absolute inset-x-4 bottom-4 text-white">
+              <span className="font-display block text-lg font-semibold tracking-tight">{place.name}</span>
+              <span className="block text-sm text-white/75">{DISTRICT_BY_ID[place.district].name}</span>
+            </span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 // ---------- What Yaluwo never skips ----------
 export function Promises() {
   const config = useConfig()
@@ -161,13 +200,15 @@ export function ForDrivers() {
 }
 
 export function FinalCall() {
+  const photo = PLACE_BY_ID.mirissa?.photos?.[1]
   return (
     <section className="px-[clamp(20px,4.5vw,72px)] pb-24">
-      <div className="bg-sunset relative mx-auto max-w-[1456px] overflow-hidden rounded-4xl px-6 py-16 text-center text-white sm:py-20">
-        <p aria-hidden lang="si" className="font-sinhala pointer-events-none absolute -bottom-10 left-1/2 -translate-x-1/2 select-none whitespace-nowrap text-[11rem] font-black leading-none text-white/10">යාළුවෝ</p>
-        <h2 className="display relative mx-auto max-w-2xl text-[clamp(1.9rem,4.4vw,3.4rem)]">Got a route in mind? Find the friends to share it.</h2>
-        <div className="relative mt-9 flex flex-wrap justify-center gap-3">
-          <Link to="/#plan" className={`${btn.primary} !bg-night !text-white`}>Plan a route</Link>
+      <div className="relative isolate mx-auto max-w-[1456px] overflow-hidden rounded-4xl bg-night px-6 py-20 text-center text-white sm:py-28">
+        {photo && <img src={photo.src} alt="" loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover" />}
+        <div className="absolute inset-0 -z-10 bg-night/45" />
+        <h2 className="display mx-auto max-w-2xl text-[clamp(1.9rem,4.4vw,3.4rem)]">Got a route in mind? Find the friends to share it.</h2>
+        <div className="mt-9 flex flex-wrap justify-center gap-3">
+          <Link to="/#plan" className={btn.accent}>Plan a route</Link>
           <Link to="/trips" className={btn.glass}>Find a trip</Link>
         </div>
       </div>

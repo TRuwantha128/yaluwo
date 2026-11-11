@@ -91,7 +91,7 @@ export default function Planner() {
   }
 
   return (
-    <section id="plan" className="relative bg-surface-2 lg:h-[100svh] lg:min-h-[720px]">
+    <section id="plan" className="relative scroll-mt-0 bg-surface-2 lg:h-[100svh] lg:min-h-[720px]">
       <LiveMap
         stops={stops}
         line={line}
@@ -112,8 +112,7 @@ export default function Planner() {
       {/* The route panel */}
       <div className="relative z-10 lg:pointer-events-none lg:absolute lg:inset-y-0 lg:left-[var(--edge)] lg:flex lg:w-[440px] lg:items-start lg:pb-6 lg:pt-24">
         <div className="scrollbar-none bg-surface p-5 ring-1 ring-line lg:pointer-events-auto lg:max-h-full lg:w-full lg:overflow-y-auto lg:rounded-3xl lg:p-6 lg:shadow-[0_30px_80px_-30px_rgba(21,23,74,0.6)]" data-lenis-prevent>
-          <p className="font-sinhala text-sm font-semibold text-accent" lang="si">යාළුවෝ <span className="font-sans font-medium text-muted">means friends</span></p>
-          <h1 className="mt-2 text-[clamp(1.7rem,3vw,2.3rem)]">Where are you going?</h1>
+          <h2 className="display text-[clamp(1.7rem,3vw,2.3rem)]">Where are you going?</h2>
           <p className="mt-2 text-muted">Build a route on the map. See the real road distance and what each friend would pay, then find people to fill the seats.</p>
 
           <div className="mt-5 space-y-4">
