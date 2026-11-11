@@ -33,7 +33,7 @@ const PARTNER_ROLES = ['DRIVER', 'FLEET', 'SUPPLIER', 'GUIDE', 'ACTIVITY']
 // The mobile number is confirmed by SMS code whenever a code can reach the person
 // (a real gateway, or demo codes). Without either, sign-up asks for the email code only
 // and the number stays "not confirmed" until a gateway is connected.
-export const phoneCodeNeeded = () => env.canSms || env.demoCodes || env.isTest
+export const phoneCodeNeeded = () => env.canSms || env.isTest
 
 // ---------- Codes (6 digits, 5 minutes, at most 3 an hour) ----------
 async function sendCode({ channel, target, purpose }) {
@@ -47,9 +47,9 @@ async function sendCode({ channel, target, purpose }) {
   await db('otp_codes').insert({ target, channel, purpose, code_hash: sha256(`${target}:${code}`), expires_at: addMinutes(now(), minutes) })
   const text = `Your Yaluwo code is ${code}. It expires in ${minutes} minutes. Never share it with anyone.`
   const delivered = channel === 'EMAIL' ? await sendEmail(target, `Your Yaluwo code: ${code}`, text) : await sendSms(target, text)
-  if (!delivered && can) throw unavailable(`We could not send the code by ${channel === 'EMAIL' ? 'email' : 'SMS'} just now. Check the ${channel === 'EMAIL' ? 'address' : 'number'} and try again.`)
-  // Demo mode: no provider, so the page shows the code itself
-  return { minutes, demoCode: !delivered && env.demoCodes ? code : undefined }
+  if (!delivered && can && !env.demoCodes) throw unavailable(`We could not send the code by ${channel === 'EMAIL' ? 'email' : 'SMS'} just now. Check the ${channel === 'EMAIL' ? 'address' : 'number'} and try again.`)
+  // Test mode (payments not live): the page shows the code too, so sign-up never depends on the email arriving
+  return { minutes, delivered, demoCode: env.demoCodes ? code : undefined }
 }
 
 async function checkCode({ target, purpose, code }) {
@@ -69,8 +69,8 @@ r.post('/otp/send', limiter(20), async (req, res) => {
   const taken = await db('users').where(body.channel === 'EMAIL' ? { email: target } : { phone: target }).first()
   if (taken) throw conflict(body.channel === 'EMAIL' ? 'An account with this email already exists. Log in instead.' : 'This mobile number is already used by an account.')
   if (body.channel === 'SMS' && !phoneCodeNeeded()) return res.json({ sent: false, skipped: true, target })
-  const { minutes, demoCode } = await sendCode({ channel: body.channel, target, purpose: body.purpose })
-  res.json({ sent: true, target, minutes, demoCode })
+  const { minutes, delivered, demoCode } = await sendCode({ channel: body.channel, target, purpose: body.purpose })
+  res.json({ sent: true, target, minutes, delivered, demoCode })
 })
 
 r.post('/otp/verify', limiter(30), async (req, res) => {

@@ -2,6 +2,9 @@ import { useEffect } from 'react'
 import { AdvancedMarker, Map, useMap } from '@vis.gl/react-google-maps'
 import { MAPS_KEY, SRI_LANKA_CENTER } from './config'
 import { useTheme } from '../theme/ThemeProvider'
+import LiveMap from './Map'
+import { useRoadRoute } from './useRoadRoute'
+import { routeLine } from '../lib/polyline'
 
 // Dotted line through every stop, and zoom so the whole route fits
 function RouteLine({ stops, color }) {
@@ -31,24 +34,16 @@ function RouteLine({ stops, color }) {
   return null
 }
 
-// Free Google embedded map, used when there is no API key
-function embedUrl(stops) {
-  const point = (s) => `${s.lat},${s.lng}`
-  if (stops.length === 0) return 'https://maps.google.com/maps?q=Sri%20Lanka&z=7&output=embed'
-  if (stops.length === 1) return `https://maps.google.com/maps?q=${point(stops[0])}&z=11&output=embed`
-  return `https://maps.google.com/maps?saddr=${point(stops[0])}&daddr=${stops.slice(1).map(point).join('+to:')}&output=embed`
+function RoadMap({ stops, className }) {
+  const { route } = useRoadRoute(stops)
+  return <LiveMap stops={stops} line={stops.length > 1 ? routeLine(route, stops) : null} className={className} />
 }
 
 export default function RouteMap({ stops, className = '' }) {
   const { theme } = useTheme()
 
-  if (!MAPS_KEY) {
-    return (
-      <div className={`overflow-hidden bg-surface-2 ${className}`}>
-        <iframe title="Route map" src={embedUrl(stops)} loading="lazy" className="h-full w-full border-0" referrerPolicy="no-referrer-when-downgrade" />
-      </div>
-    )
-  }
+  // No Google key: the same route on the free live map, following real roads
+  if (!MAPS_KEY) return <RoadMap stops={stops} className={className} />
 
   return (
     <div className={`overflow-hidden bg-surface-2 ${className}`}>

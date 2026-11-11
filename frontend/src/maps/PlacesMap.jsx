@@ -4,6 +4,7 @@ import { MAPS_KEY, SRI_LANKA_CENTER } from './config'
 import { useTheme } from '../theme/ThemeProvider'
 import { useTripPicks, pickKey } from '../hooks/useTripPicks'
 import { coverOf } from '../lib/places'
+import LiveMap from './Map'
 
 function FitPlaces({ places, zoom }) {
   const map = useMap()
@@ -26,12 +27,16 @@ export default function PlacesMap({ places, query, zoom = 12, onPinClick, classN
   const { theme } = useTheme()
   const picks = useTripPicks()
 
+  // No Google key: photo pins on the free live map
   if (!MAPS_KEY) {
-    const q = query ?? (places[0] ? `${places[0].lat},${places[0].lng}` : 'Sri Lanka')
     return (
-      <div className={`overflow-hidden bg-surface-2 ${className}`}>
-        <iframe title="Map" src={`https://maps.google.com/maps?q=${encodeURIComponent(q)}&z=${zoom}&output=embed`} loading="lazy" className="h-full w-full border-0" referrerPolicy="no-referrer-when-downgrade" />
-      </div>
+      <LiveMap
+        places={places.map((p) => ({ ...p, id: p.id ?? p.placeId, photo: coverOf(p)?.sm }))}
+        picked={places.filter((p) => picks.some((x) => x.key === pickKey(p))).map((p) => p.id ?? p.placeId)}
+        onPlaceClick={onPinClick}
+        zoom={zoom}
+        className={className}
+      />
     )
   }
 

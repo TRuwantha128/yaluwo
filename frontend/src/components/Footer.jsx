@@ -6,7 +6,7 @@ const COLUMNS = {
     ['Find trips', '/trips'],
     ['Create a trip', '/trips/new'],
     ['Destinations', '/places'],
-    ['What it costs', '/#share'],
+    ['Plan a route', '/#plan'],
   ],
   Yaluwo: [
     ['Safety', '/#safety'],

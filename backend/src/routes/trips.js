@@ -1,13 +1,15 @@
 import { Router } from 'express'
 import { z } from 'zod'
 import { db } from '../db/knex.js'
-import { parse, upload } from '../middleware/http.js'
+import { parse, upload, limiter } from '../middleware/http.js'
 import { optionalAuth, requireActive, requireAuth, requireVerified } from '../middleware/auth.js'
 import { bad, conflict, forbidden, notFound } from '../lib/errors.js'
 import { maskContacts } from '../lib/mask.js'
 import { addDays, addHours, colomboDate, colomboMidnight, daysBetween, now } from '../lib/time.js'
 import { setting, settings, activeRateCard, vehicleRates } from '../services/settings.js'
-import { computeLegs, returnKm } from '../services/routes.js'
+import { computeLegs, returnKm, searchOsmPlaces } from '../services/routes.js'
+import { planTrip } from '../services/assistant.js'
+import { env } from '../config/env.js'
 import { haversineKm, memberShares, round2, suggestedTransportPrice, commissionOf } from '../services/pricing.js'
 import { saveUpload, signedUrl } from '../services/files.js'
 import { notify, adminIds, pingAdmins } from '../services/notify.js'
@@ -49,6 +51,30 @@ r.post('/routes/compute', async (req, res) => {
   const body = parse(z.object({ stops: z.array(stopSchema).min(1).max(20), seats: z.coerce.number().int().min(1).max(60).default(4), flexible: z.boolean().default(false) }), req.body)
   const route = await computeLegs(body.stops)
   res.json({ ...route, prices: await priceOptions({ stops: body.stops, km: route.totalKm, seats: body.seats, flexible: body.flexible }), warnings: await drivingWarnings(route.legs, body.stops) })
+})
+
+// Any place in Sri Lanka by name, for stops that are not on Yaluwo's own list
+r.get('/places/search', limiter(120), async (req, res) => {
+  const q = String(req.query.q ?? '').trim().slice(0, 80)
+  if (q.length < 2 || !env.photonUrl) return res.json({ places: [] })
+  try {
+    res.json({ places: await searchOsmPlaces(q) })
+  } catch (e) {
+    console.warn('Place search failed:', e.message)
+    res.json({ places: [] })
+  }
+})
+
+// The trip helper: a sentence in, a route out (only when ANTHROPIC_API_KEY is set)
+r.post('/assistant/plan', limiter(12), async (req, res) => {
+  const body = parse(
+    z.object({
+      prompt: z.string().trim().min(8, 'Say a little more: where, how many days, what you like.').max(600),
+      places: z.array(z.object({ id: z.string().max(60), name: z.string().max(120), district: z.string().max(60), kind: z.string().max(20), lat: z.number(), lng: z.number() })).min(5).max(400),
+    }),
+    req.body,
+  )
+  res.json(await planTrip(body))
 })
 
 async function drivingWarnings(legs) {
