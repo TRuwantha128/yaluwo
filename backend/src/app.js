@@ -23,7 +23,7 @@ export function createApp() {
   app.disable('x-powered-by')
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'same-site' } }))
   // The website calls the API from its own address only
-  app.use(cors({ origin: [env.appUrl], credentials: true }))
+  app.use(cors({ origin: env.corsOrigins, credentials: true }))
   app.use(cookieParser())
   app.use(express.json({ limit: '1mb' }))
 

@@ -34,7 +34,7 @@ function DistrictCard({ district: d, active, onHover }) {
         <div className="absolute inset-x-4 bottom-4 text-white">
           <p className="text-xs font-medium text-white/75">{d.province} Province</p>
           <div className="flex items-end justify-between gap-3">
-            <h3 className="text-2xl font-extrabold tracking-tight">{d.name}</h3>
+            <h3 className="text-2xl font-bold tracking-tight">{d.name}</h3>
             <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#0e1726] transition group-hover:bg-accent group-hover:text-on-accent">
               <ArrowUpRight className="h-4 w-4" />
             </span>

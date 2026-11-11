@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { BadgeCheck, ChevronDown, CreditCard, LogOut, Map, Menu, MessageCircle, Plus, Repeat, Shield, User, X } from 'lucide-react'
+import { BadgeCheck, ChevronDown, CreditCard, LogOut, Map, Menu, MessageCircle, Moon, Plus, Repeat, Shield, Sun, User, X } from 'lucide-react'
 import { Avatar, Logo } from './ui'
 import { useAuth } from '../auth/AuthProvider'
 import Notifications from './Notifications'
+import { useTheme } from '../theme/ThemeProvider'
 
 const PUBLIC_LINKS = [
-  ['Home', '/'],
   ['Find trips', '/trips'],
   ['Destinations', '/places'],
-  ['How it works', '/#how'],
+  ['What it costs', '/#share'],
+  ['Safety', '/#safety'],
+  ['For drivers', '/#partners'],
 ]
 const TRAVELLER_LINKS = [
   ['Find trips', '/trips'],
@@ -48,13 +50,13 @@ function AccountMenu() {
 
   return (
     <div ref={box} className="relative">
-      <button onClick={() => setOpen(!open)} className="flex items-center gap-1 rounded-full p-1 pr-2 hover:bg-surface-2" aria-label="Account menu" aria-expanded={open}>
+      <button onClick={() => setOpen(!open)} className="flex items-center gap-1 rounded-xl p-1 pr-2 hover:bg-white/10" aria-label="Account menu" aria-expanded={open}>
         <Avatar name={user.fullName} size="h-8 w-8 text-xs" ring={false} />
         <ChevronDown className="h-4 w-4 text-muted" />
       </button>
       <AnimatePresence>
         {open && (
-          <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} className="absolute right-0 top-12 w-64 rounded-3xl bg-surface p-2 shadow-2xl ring-1 ring-line">
+          <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} className="nav-pop absolute right-0 top-12 w-64 rounded-3xl bg-surface p-2 shadow-2xl ring-1 ring-line">
             <div className="px-3 py-2">
               <p className="truncate font-bold">{user.fullName}</p>
               <p className="truncate text-xs text-muted">{user.email}</p>
@@ -85,7 +87,7 @@ export default function Navbar() {
   const { user, ready, mode, unread } = useAuth()
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => setScrolled(window.scrollY > 20)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -93,85 +95,80 @@ export default function Navbar() {
 
   useEffect(() => setOpen(false), [pathname])
 
-  // At the top of the home page the bar sits on the photo; once you scroll it
-  // shrinks into a floating glass bar
-  // Pages that open with a full photo header
-  const photoTop = pathname === '/' || pathname === '/trips'
-  const clear = photoTop && !scrolled && !open
-  const floating = scrolled || open
+  const { mode: colour, toggle } = useTheme()
   const links = !user ? PUBLIC_LINKS : mode === 'partner' ? PARTNER_LINKS : TRAVELLER_LINKS
-  const isActive = (to) => !hash && !to.includes('#') && (to === '/' ? pathname === '/' : pathname === to || (to === '/places' && pathname.startsWith('/places')))
-  const tone = clear ? 'text-white/80 hover:text-white' : 'text-muted hover:text-ink'
-  const solidBtn = clear ? 'bg-white text-night hover:bg-white/90' : 'bg-ink text-bg hover:opacity-90'
+  const linkClass = ({ isActive }) =>
+    `rounded-xl px-3.5 py-2 transition ${isActive && !hash ? 'bg-white/15 text-white' : 'text-white/75 hover:bg-white/10 hover:text-white'}`
+  const icon = 'grid h-10 w-10 place-items-center rounded-xl text-white/85 hover:bg-white/10 hover:text-white'
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
-      <div
-        className={`pointer-events-auto relative mx-auto transition-[max-width,margin,border-radius,background-color,box-shadow,width] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] ${
-          floating
-            ? 'mt-3 w-[calc(100%-24px)] max-w-[1080px] rounded-[22px] bg-surface/95 shadow-[0_10px_30px_-12px_color-mix(in_oklab,var(--night)_30%,transparent)] ring-1 ring-line backdrop-blur-xl'
-            : 'mt-0 w-full max-w-[1600px] rounded-none bg-transparent'
-        } ${clear ? '[&_.text-ink]:text-white' : ''}`}
+    <header className="fixed inset-x-0 top-0 z-50 px-[clamp(8px,calc(4.5vw_-_16px),56px)] pt-3">
+      <nav
+        className={`nav-dark mx-auto flex max-w-[1488px] items-center justify-between gap-2 rounded-3xl py-2 pl-4 pr-2 ring-1 backdrop-blur-xl transition-all duration-300 ${
+          scrolled || open ? 'bg-night/90 shadow-[0_18px_40px_-22px_rgba(14,16,56,0.8)] ring-white/15' : 'bg-night/90 ring-white/10'
+        }`}
+        aria-label="Main"
       >
-        <nav className={`flex h-16 items-center justify-between gap-4 transition-[padding] duration-500 ${floating ? 'pl-4 pr-2' : 'px-[clamp(20px,4.5vw,72px)]'}`} aria-label="Main">
-          <Logo light={clear} />
-          <ul className="hidden items-center gap-1 text-[15px] font-medium lg:flex">
-            {links.map(([label, to]) => {
-              const active = isActive(to)
-              return (
-                <li key={label} className="relative">
-                  {active && <motion.span layoutId="nav-active" className={`absolute inset-0 rounded-full ${clear ? 'bg-white/15' : 'bg-surface-2'}`} transition={{ type: 'spring', stiffness: 420, damping: 36 }} />}
-                  <Link to={to} aria-current={active ? 'page' : undefined} className={`relative block rounded-full px-4 py-2 transition-colors ${active ? (clear ? 'text-white' : 'text-ink') : tone}`}>
-                    {label}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-          <div className="flex items-center gap-1.5">
-            {ready && !user && (
-              <>
-                <Link to="/login" className={`hidden rounded-full px-4 py-2 text-[15px] font-medium transition-colors sm:block ${tone}`}>Log in</Link>
-                <Link to="/signup" className={`inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold transition ${solidBtn}`}>Sign up</Link>
-              </>
-            )}
-            {user && (
-              <>
-                {mode !== 'partner' && (
-                  <Link to="/trips/new" className={`mr-1 hidden items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold transition sm:inline-flex ${solidBtn}`}>
-                    <Plus className="h-4 w-4" /> Create a trip
-                  </Link>
-                )}
-                <Link to="/messages" className="relative grid h-10 w-10 place-items-center rounded-full text-ink hover:bg-surface-2/60" aria-label={`Messages${unread.messages ? `, ${unread.messages} unread` : ''}`}>
-                  <MessageCircle className="h-5 w-5" />
-                  {unread.messages > 0 && <span className="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-on-accent">{unread.messages > 9 ? '9+' : unread.messages}</span>}
-                </Link>
-                <Notifications />
-                <AccountMenu />
-              </>
-            )}
-            <button onClick={() => setOpen(!open)} className="grid h-10 w-10 place-items-center rounded-full text-ink lg:hidden" aria-label="Menu" aria-expanded={open}>
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
-          </div>
-        </nav>
-
-        <AnimatePresence>
-          {open && (
-            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden lg:hidden">
-              <ul className="border-t border-line px-4 py-2">
-                {links.map(([label, to]) => (
-                  <li key={label}>
-                    <Link to={to} onClick={() => setOpen(false)} className={`block border-b border-line py-3.5 text-lg font-medium last:border-0 ${isActive(to) ? 'text-brand' : ''}`}>{label}</Link>
-                  </li>
-                ))}
-                {user && mode !== 'partner' && <li><Link to="/trips/new" className="block py-3.5 text-lg font-semibold text-brand">Create a trip</Link></li>}
-                {!user && <li><Link to="/login" className="block py-3.5 text-lg font-medium">Log in</Link></li>}
-              </ul>
-            </motion.div>
+        <Logo light />
+        <ul className="hidden items-center gap-0.5 text-sm font-semibold lg:flex">
+          {links.map(([label, to]) => (
+            <li key={label}>
+              {to.includes('#') ? (
+                <Link to={to} className={linkClass({ isActive: false })}>{label}</Link>
+              ) : (
+                <NavLink to={to} end={!['/places'].includes(to)} className={linkClass}>{label}</NavLink>
+              )}
+            </li>
+          ))}
+        </ul>
+        <div className="flex items-center gap-1">
+          <button onClick={toggle} className={icon} aria-label={colour === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}>
+            {colour === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </button>
+          {ready && !user && (
+            <>
+              <Link to="/login" className="hidden rounded-xl px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10 sm:block">Log in</Link>
+              <Link to="/signup" className="inline-flex items-center rounded-2xl bg-accent px-4 py-2.5 text-sm font-bold text-on-accent transition hover:bg-accent-strong">Sign up</Link>
+            </>
           )}
-        </AnimatePresence>
-      </div>
+          {user && (
+            <>
+              {mode !== 'partner' && (
+                <Link to="/trips/new" className="hidden items-center gap-1.5 rounded-2xl bg-accent px-4 py-2.5 text-sm font-bold text-on-accent transition hover:bg-accent-strong sm:inline-flex">
+                  <Plus className="h-4 w-4" /> Create a trip
+                </Link>
+              )}
+              <Link to="/messages" className={`relative ${icon}`} aria-label={`Messages${unread.messages ? `, ${unread.messages} unread` : ''}`}>
+                <MessageCircle className="h-5 w-5" />
+                {unread.messages > 0 && <span className="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-on-accent">{unread.messages > 9 ? '9+' : unread.messages}</span>}
+              </Link>
+              <Notifications />
+              <AccountMenu />
+            </>
+          )}
+          <button onClick={() => setOpen(!open)} className={`${icon} lg:hidden`} aria-label="Menu" aria-expanded={open}>
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </nav>
+
+      <AnimatePresence>
+        {open && (
+          <motion.ul initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="mx-auto mt-2 max-w-[1488px] rounded-3xl bg-night/95 p-2 text-white shadow-xl ring-1 ring-white/15 backdrop-blur-xl lg:hidden">
+            {links.map(([label, to]) => (
+              <li key={label}>
+                <Link to={to} onClick={() => setOpen(false)} className="block rounded-2xl px-4 py-3 font-semibold hover:bg-white/10">{label}</Link>
+              </li>
+            ))}
+            {user && mode !== 'partner' && (
+              <li><Link to="/trips/new" className="block rounded-2xl px-4 py-3 font-semibold text-mango hover:bg-white/10">Create a trip</Link></li>
+            )}
+            {!user && (
+              <li><Link to="/login" className="block rounded-2xl px-4 py-3 font-semibold hover:bg-white/10">Log in</Link></li>
+            )}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </header>
   )
 }

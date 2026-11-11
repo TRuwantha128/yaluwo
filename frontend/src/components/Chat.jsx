@@ -80,7 +80,7 @@ export default function Chat({ threadId, className = '', compact = false }) {
           lastDay = d
           return (
             <div key={m.id}>
-              {showDay && <p className="my-3 text-center text-[11px] font-semibold uppercase tracking-wider text-muted">{d}</p>}
+              {showDay && <p className="my-3 text-center text-[11px] font-semibold text-muted">{d}</p>}
               {m.kind === 'SYSTEM' ? (
                 <p className="mx-auto max-w-md rounded-2xl bg-brand-soft px-4 py-2 text-center text-xs text-ink">{m.content}</p>
               ) : (

@@ -64,13 +64,13 @@ export default function Security() {
       <div className="flex items-start gap-4">
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-soft text-brand"><ShieldCheck className="h-6 w-6" /></span>
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight">Security</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Security</h1>
           <p className="mt-1 text-muted">Nobody at Yaluwo can see your password, not even the admin.</p>
         </div>
       </div>
 
       <section className="rounded-3xl bg-surface p-6 ring-1 ring-line">
-        <h2 className="flex items-center gap-2 text-xl font-extrabold tracking-tight"><KeyRound className="h-5 w-5" /> Change password</h2>
+        <h2 className="flex items-center gap-2 text-xl font-bold tracking-tight"><KeyRound className="h-5 w-5" /> Change password</h2>
         {done ? (
           <Notice tone="success" className="mt-4">Password changed. Your other devices were logged out, and we sent an email with a "This wasn't me" link.</Notice>
         ) : (
@@ -86,12 +86,12 @@ export default function Security() {
       </section>
 
       <section className="rounded-3xl bg-surface p-6 ring-1 ring-line">
-        <h2 className="mb-4 flex items-center gap-2 text-xl font-extrabold tracking-tight"><Smartphone className="h-5 w-5" /> Two-step login</h2>
+        <h2 className="mb-4 flex items-center gap-2 text-xl font-bold tracking-tight"><Smartphone className="h-5 w-5" /> Two-step login</h2>
         <TwoStep />
       </section>
 
       <section className="rounded-3xl bg-surface p-6 ring-1 ring-line">
-        <h2 className="flex items-center gap-2 text-xl font-extrabold tracking-tight"><LogOut className="h-5 w-5" /> Devices</h2>
+        <h2 className="flex items-center gap-2 text-xl font-bold tracking-tight"><LogOut className="h-5 w-5" /> Devices</h2>
         <p className="mt-1 text-sm text-muted">Logged in somewhere you don't recognise? End every session, including this one.</p>
         {out.error && <Notice tone="danger" className="mt-3">{out.error}</Notice>}
         <button onClick={() => out.run(async () => { await post('/auth/sessions/revoke-all'); await logout(); navigate('/login') })} className={`${btn.ghost} mt-4`}>Log out of all devices</button>

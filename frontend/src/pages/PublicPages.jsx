@@ -45,7 +45,7 @@ export function DriverProfile() {
   return (
     <div className="mx-auto max-w-4xl px-4 pb-16 pt-28">
       <Head photo={v.photo} name={v.name}>
-        <h1 className="text-3xl font-extrabold tracking-tight">{v.name}</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{v.name}</h1>
         <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
           <Stars value={v.rating} /> <span className="text-muted">{v.reviews} reviews · {v.tripsCompleted} trips</span>
         </div>
@@ -99,7 +99,7 @@ export function PersonProfile() {
   return (
     <div className="mx-auto max-w-3xl px-4 pb-16 pt-28">
       <Head photo={p.photo} name={p.firstName}>
-        <h1 className="text-3xl font-extrabold tracking-tight">{p.firstName}</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{p.firstName}</h1>
         <div className="mt-2 flex flex-wrap items-center gap-3 text-sm"><Stars value={p.rating} /><span className="text-muted">{p.reviews} reviews · {p.tripsCompleted} trips</span>{p.verified && <span className="inline-flex items-center gap-1 font-semibold text-brand"><BadgeCheck className="h-4 w-4" /> ID checked</span>}</div>
       </Head>
       {p.bio && <p className="mt-6">{p.bio}</p>}
@@ -136,7 +136,7 @@ export function LegalPage() {
   return (
     <article className="mx-auto max-w-3xl px-4 pb-16 pt-28">
       <p className="text-sm text-muted">Version {page.version}{page.publishedAt ? ` · ${new Date(page.publishedAt).toLocaleDateString('en-GB', { dateStyle: 'long' })}` : ''}</p>
-      <h1 className="mt-1 text-3xl font-extrabold tracking-tight md:text-4xl">{page.title}</h1>
+      <h1 className="mt-1 text-3xl font-bold tracking-tight md:text-4xl">{page.title}</h1>
       <div className="mt-8"><LegalBody body={page.body.replace(/^#\s+.*\n+/, '')} /></div>
     </article>
   )

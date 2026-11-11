@@ -169,7 +169,7 @@ export default function PlacePage() {
             <p className="text-sm font-semibold text-brand">
               {district.name} District · {district.province} Province
             </p>
-            <h1 className="mt-2 text-4xl font-extrabold leading-[1.05] tracking-[-0.03em] md:text-5xl">{place.name}</h1>
+            <h1 className="mt-2 text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-5xl">{place.name}</h1>
             <div className="mt-4 flex flex-wrap gap-2">
               {place.tags.map((t) => (
                 <Link key={t} to={`/trips?tag=${encodeURIComponent(t)}`} className="rounded-full bg-surface px-3 py-1.5 text-xs font-semibold ring-1 ring-line hover:ring-brand">
@@ -204,7 +204,7 @@ export default function PlacePage() {
         <section className="mt-16 grid gap-6 lg:grid-cols-[1.3fr_1fr]">
           <PlacesMap places={one} query={`${place.name}, ${district.name}, Sri Lanka`} zoom={12} className="h-[340px] rounded-3xl ring-1 ring-line md:h-[420px]" />
           <div>
-            <h2 className="text-xl font-extrabold tracking-tight">Close by</h2>
+            <h2 className="text-xl font-bold tracking-tight">Close by</h2>
             <ul className="mt-4 space-y-2">
               {nearby.map((p) => (
                 <li key={p.id}>
@@ -228,7 +228,7 @@ export default function PlacePage() {
         </section>
 
         <section className="mt-16">
-          <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl">Around {place.name}</h2>
+          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">Around {place.name}</h2>
           <p className="mb-5 mt-1 text-sm text-muted">Live from Google Maps: things to do, places to stay and places to eat nearby.</p>
           <GooglePlaces area={`${place.name}, Sri Lanka`} bounds={bounds} />
         </section>

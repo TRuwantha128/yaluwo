@@ -3,7 +3,6 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import ThemePanel from './theme/ThemePanel'
 import Home from './pages/Home'
 import TripsPage from './pages/TripsPage'
 import CreateTrip from './pages/CreateTrip'
@@ -38,6 +37,8 @@ const PartnerCalendar = named(partner, 'PartnerCalendar')
 const PartnerEarnings = named(partner, 'PartnerEarnings')
 const AdminArea = lazy(() => import('./pages/admin/AdminArea'))
 const AdminLogin = named(() => import('./pages/admin/AdminShell'), 'AdminLogin')
+// Development only: try the camera without an account (this route is not in a production build)
+const CaptureTest = import.meta.env.DEV ? lazy(() => import('./pages/CaptureTest')) : null
 const PARTNER = ['DRIVER', 'FLEET']
 
 let lenis
@@ -123,13 +124,13 @@ export default function App() {
             <Route path="/places" element={<DestinationsPage />} />
             <Route path="/places/:districtId" element={<DistrictPage />} />
             <Route path="/places/:districtId/:placeId" element={<PlacePage />} />
+            {CaptureTest && <Route path="/capture-test" element={<CaptureTest />} />}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </main>
       <Footer />
       <PicksTray />
-      <ThemePanel />
     </>
   )
 }

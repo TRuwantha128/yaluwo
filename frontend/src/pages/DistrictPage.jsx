@@ -43,7 +43,7 @@ export default function DistrictPage() {
         <header className="mt-6 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
           <div>
             <p className="text-sm font-semibold text-brand">{district.province} Province</p>
-            <h1 className="mt-1 text-5xl font-extrabold tracking-[-0.035em] md:text-7xl">{district.name}</h1>
+            <h1 className="mt-1 text-5xl font-bold tracking-[-0.035em] md:text-7xl">{district.name}</h1>
             <p className="mt-4 max-w-xl text-lg text-muted">{district.blurb}</p>
             <p className="mt-4 text-sm font-semibold">
               {places.length} {places.length === 1 ? 'place' : 'places'} · {places.reduce((n, p) => n + p.photos.length, 0)} photos
@@ -71,7 +71,7 @@ export default function DistrictPage() {
         <section className="mt-14">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl">Places to visit</h2>
+              <h2 className="text-2xl font-bold tracking-tight md:text-3xl">Places to visit</h2>
               <p className="mt-1 text-sm text-muted">Select the places you want. They're saved on this device until you plan your trip.</p>
             </div>
             {kinds.length > 2 && (
@@ -100,7 +100,7 @@ export default function DistrictPage() {
         <section className="mt-16 grid gap-6 lg:grid-cols-[1.3fr_1fr]">
           <PlacesMap places={places} query={area} zoom={9} onPinClick={(p) => navigate(placeUrl(p))} className="h-[380px] rounded-3xl ring-1 ring-line md:h-[460px]" />
           <div className="rounded-3xl bg-brand-soft p-6 md:p-8">
-            <h2 className="text-2xl font-extrabold tracking-tight">Not finding your spot?</h2>
+            <h2 className="text-2xl font-bold tracking-tight">Not finding your spot?</h2>
             <p className="mt-2 text-muted">
               There's much more in {district.name} than we have photos of. Look through Google Maps below, or search any place when you build your route.
             </p>
@@ -111,7 +111,7 @@ export default function DistrictPage() {
         </section>
 
         <section className="mt-16">
-          <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl">More places in {district.name}</h2>
+          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">More places in {district.name}</h2>
           <p className="mb-5 mt-1 text-sm text-muted">Live from Google Maps.</p>
           <GooglePlaces area={area} bounds={district.bounds} />
         </section>

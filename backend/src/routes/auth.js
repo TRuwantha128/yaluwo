@@ -5,7 +5,7 @@ import { db } from '../db/knex.js'
 import { env } from '../config/env.js'
 import { parse, limiter } from '../middleware/http.js'
 import { loadUser, requireAuth, signShort, verifyShort } from '../middleware/auth.js'
-import { bad, conflict, forbidden, tooMany, unauthorized } from '../lib/errors.js'
+import { bad, conflict, forbidden, tooMany, unauthorized, unavailable } from '../lib/errors.js'
 import { decrypt, encrypt, randomDigits, randomToken, sha256 } from '../lib/crypto.js'
 import { generateSecret, otpauthUrl, verifyTotp } from '../lib/totp.js'
 import { checkPassword, hashPassword, validatePassword } from '../lib/passwords.js'
@@ -13,7 +13,7 @@ import { addHours, addMinutes, colomboDate, now } from '../lib/time.js'
 import { ageOn } from '../lib/nic.js'
 import { settings, setting } from '../services/settings.js'
 import { sendEmail, sendSms } from '../services/messages.js'
-import { endSession, issueSession, refreshSession, revokeAll, REFRESH_COOKIE } from '../services/sessions.js'
+import { cookieOptions, endSession, issueSession, refreshSession, revokeAll, REFRESH_COOKIE } from '../services/sessions.js'
 import { audit } from '../services/audit.js'
 import { notify, adminIds } from '../services/notify.js'
 
@@ -30,16 +30,26 @@ const phone = z
 
 const PARTNER_ROLES = ['DRIVER', 'FLEET', 'SUPPLIER', 'GUIDE', 'ACTIVITY']
 
+// The mobile number is confirmed by SMS code whenever a code can reach the person
+// (a real gateway, or demo codes). Without either, sign-up asks for the email code only
+// and the number stays "not confirmed" until a gateway is connected.
+export const phoneCodeNeeded = () => env.canSms || env.demoCodes || env.isTest
+
 // ---------- Codes (6 digits, 5 minutes, at most 3 an hour) ----------
 async function sendCode({ channel, target, purpose }) {
   const { minutes, perHour } = await settings({ minutes: 'accounts.otp_minutes', perHour: 'accounts.otp_per_hour' })
+  const can = channel === 'EMAIL' ? env.canEmail : env.canSms
+  // Nothing can deliver this code and it may not be shown on the page: say so instead of pretending
+  if (!can && !env.demoCodes && !env.isTest) throw unavailable(channel === 'EMAIL' ? 'Email sending is not set up on the server yet. Please tell the site owner.' : 'SMS sending is not set up on the server yet.')
   const recent = await db('otp_codes').where({ target, purpose }).where('created_at', '>', addHours(now(), -1)).count({ n: '*' }).first()
   if (recent.n >= perHour) throw tooMany('Too many codes requested. Try again in an hour.')
   const code = randomDigits(6)
   await db('otp_codes').insert({ target, channel, purpose, code_hash: sha256(`${target}:${code}`), expires_at: addMinutes(now(), minutes) })
   const text = `Your Yaluwo code is ${code}. It expires in ${minutes} minutes. Never share it with anyone.`
-  if (channel === 'EMAIL') await sendEmail(target, `Your Yaluwo code: ${code}`, text)
-  else await sendSms(target, text)
+  const delivered = channel === 'EMAIL' ? await sendEmail(target, `Your Yaluwo code: ${code}`, text) : await sendSms(target, text)
+  if (!delivered && can) throw unavailable(`We could not send the code by ${channel === 'EMAIL' ? 'email' : 'SMS'} just now. Check the ${channel === 'EMAIL' ? 'address' : 'number'} and try again.`)
+  // Demo mode: no provider, so the page shows the code itself
+  return { minutes, demoCode: !delivered && env.demoCodes ? code : undefined }
 }
 
 async function checkCode({ target, purpose, code }) {
@@ -58,8 +68,9 @@ r.post('/otp/send', limiter(20), async (req, res) => {
   const target = body.channel === 'EMAIL' ? parse(email, body.target) : parse(phone, body.target)
   const taken = await db('users').where(body.channel === 'EMAIL' ? { email: target } : { phone: target }).first()
   if (taken) throw conflict(body.channel === 'EMAIL' ? 'An account with this email already exists. Log in instead.' : 'This mobile number is already used by an account.')
-  await sendCode({ channel: body.channel, target, purpose: body.purpose })
-  res.json({ sent: true, target })
+  if (body.channel === 'SMS' && !phoneCodeNeeded()) return res.json({ sent: false, skipped: true, target })
+  const { minutes, demoCode } = await sendCode({ channel: body.channel, target, purpose: body.purpose })
+  res.json({ sent: true, target, minutes, demoCode })
 })
 
 r.post('/otp/verify', limiter(30), async (req, res) => {
@@ -80,7 +91,7 @@ r.post('/register', limiter(10), async (req, res) => {
       phone,
       password: z.string(),
       emailProof: z.string(),
-      phoneProof: z.string(),
+      phoneProof: z.string().nullable().optional(),
       gender: z.enum(['MALE', 'FEMALE']),
       dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Enter your date of birth'),
       nationality: z.string().length(2).default('LK'),
@@ -92,9 +103,10 @@ r.post('/register', limiter(10), async (req, res) => {
   )
 
   const ep = verifyShort(body.emailProof, 'otp')
-  const pp = verifyShort(body.phoneProof, 'otp')
+  const pp = body.phoneProof ? verifyShort(body.phoneProof, 'otp') : null
   if (!ep || ep.target !== body.email || ep.channel !== 'EMAIL') throw bad('Confirm your email with the code first.', { fields: { email: 'Not confirmed' } })
-  if (!pp || pp.target !== body.phone || pp.channel !== 'SMS') throw bad('Confirm your mobile number with the code first.', { fields: { phone: 'Not confirmed' } })
+  const phoneConfirmed = Boolean(pp && pp.target === body.phone && pp.channel === 'SMS')
+  if (!phoneConfirmed && phoneCodeNeeded()) throw bad('Confirm your mobile number with the code first.', { fields: { phone: 'Not confirmed' } })
 
   const { minAge, min } = await settings({ minAge: 'accounts.min_age', min: 'accounts.password_min' })
   if (ageOn(body.dateOfBirth, colomboDate()) < minAge) throw bad(`You must be ${minAge} or older to use Yaluwo.`, { fields: { dateOfBirth: `${minAge}+ only` } })
@@ -118,7 +130,7 @@ r.post('/register', limiter(10), async (req, res) => {
       date_of_birth: body.dateOfBirth,
       nationality: body.nationality.toUpperCase(),
       email_verified_at: now(),
-      phone_verified_at: now(),
+      phone_verified_at: phoneConfirmed ? now() : null,
       password_changed_at: now(),
     })
     await trx('user_roles').insert([{ user_id: id, role: 'TRAVELLER' }, ...(body.partnerRole ? [{ user_id: id, role: body.partnerRole }] : [])])
@@ -206,7 +218,7 @@ r.post('/refresh', async (req, res) => {
   if (!req.cookies?.[REFRESH_COOKIE]) return res.status(204).end()
   const session = await refreshSession(req, res)
   if (!session) {
-    res.clearCookie(REFRESH_COOKIE, { path: '/api/v1/auth' })
+    res.clearCookie(REFRESH_COOKIE, cookieOptions())
     throw unauthorized('Your session has ended. Please log in again.')
   }
   const p = verifyShort(session.accessToken, 'access')
@@ -221,7 +233,7 @@ r.post('/logout', async (req, res) => {
 
 r.post('/sessions/revoke-all', requireAuth, async (req, res) => {
   await revokeAll(req.user.id)
-  res.clearCookie(REFRESH_COOKIE, { path: '/api/v1/auth' })
+  res.clearCookie(REFRESH_COOKIE, cookieOptions())
   res.json({ ok: true })
 })
 

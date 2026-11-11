@@ -13,7 +13,7 @@ function NextAction({ action }) {
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
       <Link to={action.link} className={`group flex items-center gap-4 rounded-3xl p-5 ring-1 transition ${action.urgent ? 'bg-accent text-on-accent ring-accent' : 'bg-brand-soft ring-brand/20 hover:ring-brand'}`}>
         <div className="min-w-0 flex-1">
-          <p className={`text-xs font-bold uppercase tracking-wider ${action.urgent ? 'text-on-accent/80' : 'text-brand'}`}>Next step</p>
+          <p className={`text-xs font-bold ${action.urgent ? 'text-on-accent/80' : 'text-brand'}`}>Next step</p>
           <p className="mt-1 text-lg font-bold leading-snug">{action.text}</p>
           {action.dueAt && <Countdown to={action.dueAt} className={action.urgent ? '!text-on-accent' : ''} />}
         </div>
@@ -60,7 +60,7 @@ export default function MyTrips() {
     <div className="mx-auto max-w-5xl px-4 pb-16 pt-28">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">Hi {user.firstName}</h1>
+          <h1 className="text-3xl font-bold tracking-tight md:text-4xl">Hi {user.firstName}</h1>
           <p className="mt-1 text-muted">Your trips, requests and what to do next.</p>
         </div>
         <Link to="/trips/new" className={btn.primary}><Plus className="h-4 w-4" /> Create a trip</Link>
@@ -72,7 +72,7 @@ export default function MyTrips() {
       </div>
 
       <section className="mt-12">
-        <h2 className="text-xl font-extrabold tracking-tight">Upcoming</h2>
+        <h2 className="text-xl font-bold tracking-tight">Upcoming</h2>
         {active.length === 0 ? (
           <div className="mt-4 rounded-3xl border-2 border-dashed border-line p-10 text-center">
             <Compass className="mx-auto h-8 w-8 text-muted" />
@@ -90,7 +90,7 @@ export default function MyTrips() {
 
       {past.length > 0 && (
         <section className="mt-12">
-          <h2 className="text-xl font-extrabold tracking-tight">Past and cancelled</h2>
+          <h2 className="text-xl font-bold tracking-tight">Past and cancelled</h2>
           <div className="mt-4 grid gap-3 md:grid-cols-2">{past.map((t) => <TripRow key={t.code} t={t} />)}</div>
         </section>
       )}

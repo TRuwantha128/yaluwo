@@ -147,7 +147,7 @@ export default function TripPage() {
             {trip.flexible && <span className="rounded-full bg-surface px-2.5 py-1 text-xs font-semibold ring-1 ring-line">Flexible route</span>}
             <span className="rounded-full bg-surface px-2.5 py-1 font-mono text-xs ring-1 ring-line">{trip.code}</span>
           </div>
-          <h1 className="mt-3 text-4xl font-extrabold tracking-[-0.03em] md:text-5xl">{trip.title}</h1>
+          <h1 className="mt-3 text-4xl font-bold tracking-[-0.03em] md:text-5xl">{trip.title}</h1>
           <p className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 text-muted">
             <span className="flex items-center gap-1.5"><CalendarDays className="h-4 w-4" /> {dateRange(trip.startDate, trip.stops)}</span>
             <span className="flex items-center gap-1.5"><Clock className="h-4 w-4" /> {tripDays(trip.stops)} days</span>
@@ -194,7 +194,7 @@ export default function TripPage() {
 
           <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
             <div className="rounded-3xl bg-surface p-6 ring-1 ring-line">
-              {trip.price && <p className="text-sm text-muted">Estimated per person<span className="block text-3xl font-extrabold tracking-tight text-ink">{rs(trip.price)}</span><span className="text-xs">transport share + booking fee; stays and food extra</span></p>}
+              {trip.price && <p className="text-sm text-muted">Estimated per person<span className="block text-3xl font-bold tracking-tight text-ink">{rs(trip.price)}</span><span className="text-xs">transport share + booking fee; stays and food extra</span></p>}
               <div className="mt-5 border-t border-line pt-5"><PersonChip p={trip.organiser} sub={`Organiser${trip.organiser.tripsCompleted ? ` · ${trip.organiser.tripsCompleted} trips` : ''}`} /></div>
               {trip.match != null && <p className="mt-4 rounded-2xl bg-brand-soft px-4 py-2 text-sm font-semibold text-brand">{trip.match}% match with your travel style</p>}
               <div className="mt-4 flex items-center justify-between">

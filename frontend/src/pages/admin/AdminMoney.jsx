@@ -14,7 +14,7 @@ function Table({ head, rows, empty = 'Nothing here' }) {
   return (
     <div className="overflow-x-auto rounded-3xl bg-surface ring-1 ring-line">
       <table className="w-full text-sm">
-        <thead className="bg-surface-2 text-left text-xs uppercase tracking-wider text-muted"><tr>{head.map((h) => <th key={h} className="whitespace-nowrap px-4 py-3">{h}</th>)}</tr></thead>
+        <thead className="bg-surface-2 text-left text-xs text-muted"><tr>{head.map((h) => <th key={h} className="whitespace-nowrap px-4 py-3">{h}</th>)}</tr></thead>
         <tbody>{rows.length === 0 ? <tr><td colSpan={head.length} className="px-4 py-8 text-center text-muted">{empty}</td></tr> : rows}</tbody>
       </table>
     </div>
@@ -65,7 +65,7 @@ function Slips() {
             <p>{s.bank} · {s.paidOn}{s.bankRef ? ` · ref ${s.bankRef}` : ''}</p>
             <p className="text-xs text-muted">sent {when(s.submittedAt)}</p>
           </div>
-          <div className={`rounded-2xl p-3 text-sm ${s.line ? (Number(s.line.amount) >= Number(s.due) ? 'bg-[color-mix(in_oklab,#16a34a_12%,var(--surface))]' : 'bg-accent-soft') : 'bg-surface-2'}`}>
+          <div className={`rounded-2xl p-3 text-sm ${s.line ? (Number(s.line.amount) >= Number(s.due) ? 'bg-[color-mix(in_oklab,var(--success)_12%,var(--surface))]' : 'bg-accent-soft') : 'bg-surface-2'}`}>
             <p className="font-bold">Bank statement</p>
             {s.line ? (
               <><p>{s.line.date} · <b>{rs(s.line.amount)}</b></p><p className="text-xs">{s.line.description}</p></>

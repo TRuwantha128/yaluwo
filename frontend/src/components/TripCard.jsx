@@ -97,7 +97,7 @@ export default function TripCard({ trip: t, preview = false }) {
           <div className="text-right">
             {t.price ? (
               <>
-                <p className="text-xl font-extrabold tracking-tight">{rs(t.price)}</p>
+                <p className="text-xl font-bold tracking-tight">{rs(t.price)}</p>
                 <p className="text-xs text-muted">about, per person</p>
               </>
             ) : (

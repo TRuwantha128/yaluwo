@@ -120,7 +120,7 @@ function RouteSummary({ stops, route, seats }) {
       {route?.source === 'ESTIMATE' && <p className="mt-2 text-xs text-muted">Distances are estimates in local mode. With a Google Maps server key they come from Google Routes.</p>}
       {route?.prices?.length > 0 && (
         <div className="mt-4 space-y-1.5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted">Transport, suggested price for {seats} people</p>
+          <p className="text-xs font-semibold text-muted">Transport, suggested price for {seats} people</p>
           {route.prices.map((p) => (
             <div key={p.type} className="flex items-center justify-between rounded-xl bg-surface-2 px-3 py-2 text-sm">
               <span className="font-semibold">{p.name} <span className="font-normal text-muted">· up to {p.maxPassengers}</span></span>
@@ -243,7 +243,7 @@ export default function CreateTrip() {
 
   return (
     <div className="wrap pb-10 pt-28">
-      <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">{code ? 'Edit your trip' : 'Create a trip'}</h1>
+      <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{code ? 'Edit your trip' : 'Create a trip'}</h1>
       <p className="mt-2 text-muted">Plan the route, set the details, and publish it for others to join. Saved as a draft until you publish.</p>
 
       <ol className="mt-8 flex max-w-xl items-center gap-2">
@@ -258,7 +258,7 @@ export default function CreateTrip() {
 
       {needs && (
         <div className="mt-8 space-y-4 rounded-3xl bg-accent-soft p-6 ring-1 ring-accent/30">
-          <h2 className="text-xl font-extrabold tracking-tight">Almost there: your first trip is checked by Yaluwo</h2>
+          <h2 className="text-xl font-bold tracking-tight">Almost there: your first trip is checked by Yaluwo</h2>
           <p className="text-sm">Because your ID isn't verified yet, the admin checks you and the trip together (within 24 hours).</p>
           {needs.verification && <Link to="/verify" className={btn.primary}>1. Verify your ID</Link>}
           {needs.deposit && <DepositPanel code={needs.code} amount={needs.depositAmount} onPaid={publish} />}
@@ -369,7 +369,7 @@ export default function CreateTrip() {
               {chosen && (
                 <div className="rounded-3xl bg-brand-soft p-6 ring-1 ring-brand/20">
                   <p className="text-sm font-semibold text-brand">Estimated cost per person</p>
-                  <p className="mt-1 text-4xl font-extrabold tracking-tight">{rs(chosen.perPersonWithFee)}</p>
+                  <p className="mt-1 text-4xl font-bold tracking-tight">{rs(chosen.perPersonWithFee)}</p>
                   <p className="mt-1 text-sm text-muted">{chosen.name} for {route.totalKm} km, shared by {form.seats}, with the booking fee. Stays and food are extra.</p>
                 </div>
               )}

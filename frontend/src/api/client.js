@@ -93,12 +93,20 @@ export async function api(path, { method = 'GET', body, form, query, retry = tru
     headers['Content-Type'] = 'application/json'
     payload = JSON.stringify(body)
   }
-  const res = await fetch(url, { method, headers, body: payload, credentials: 'include' })
+  let res
+  try {
+    res = await fetch(url, { method, headers, body: payload, credentials: 'include' })
+  } catch {
+    // The request never reached the API (offline, or the server is still waking up)
+    throw new ApiError(0, { error: { code: 'NETWORK', message: "Can't reach the Yaluwo server. It may be waking up: wait a moment and try again." } })
+  }
   if (res.status === 401 && retry && !path.startsWith('/auth/')) {
     const ok = await refresh()
     if (ok) return api(path, { method, body, form, query, retry: false })
   }
   const type = res.headers.get('content-type') ?? ''
+  // A web page where JSON was expected means the website is not pointed at the API (VITE_API_URL)
+  if (type.includes('text/html')) throw new ApiError(res.status, { error: { code: 'NO_API', message: 'The website is not connected to the Yaluwo server. (Hosting: check VITE_API_URL.)' } })
   const data = type.includes('application/json') ? await res.json() : await res.blob()
   if (!res.ok) {
     const err = new ApiError(res.status, data)

@@ -41,7 +41,7 @@ export default function Notifications() {
       </button>
       <AnimatePresence>
         {open && (
-          <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} className="absolute right-0 top-12 z-50 w-[min(92vw,380px)] overflow-hidden rounded-3xl bg-surface shadow-2xl ring-1 ring-line">
+          <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} className="nav-pop absolute right-0 top-12 z-50 w-[min(92vw,380px)] overflow-hidden rounded-3xl bg-surface shadow-2xl ring-1 ring-line">
             <div className="flex items-center justify-between px-5 py-3">
               <p className="font-bold">Notifications</p>
               {items.some((n) => !n.read) && <button onClick={readAll} className="text-xs font-semibold text-brand hover:underline">Mark all read</button>}

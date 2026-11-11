@@ -89,7 +89,7 @@ export function PlaceCard({ place, showDistrict = false, onHover }) {
         </div>
         <div className="p-4 pr-5">
           {showDistrict && <p className="text-xs font-semibold text-muted">{DISTRICT_BY_ID[place.district].name} District</p>}
-          <h3 className="text-lg font-extrabold leading-snug tracking-tight">{place.name}</h3>
+          <h3 className="text-lg font-bold leading-snug tracking-tight">{place.name}</h3>
           <p className="mt-1 line-clamp-2 text-sm text-muted">{place.about}</p>
           <div className="mt-3 flex flex-wrap gap-1.5">
             {place.tags.slice(0, 3).map((t) => (
