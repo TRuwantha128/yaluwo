@@ -11,7 +11,7 @@ const app = createApp()
 const server = http.createServer(app)
 
 // Live chat, notifications and inbox counts
-const io = new Server(server, { path: '/api/v1/live', cors: { origin: [env.appUrl], credentials: true } })
+const io = new Server(server, { path: '/api/v1/live', cors: { origin: env.corsOrigins, credentials: true } })
 io.use(async (socket, next) => {
   const p = verifyShort(socket.handshake.auth?.token, 'access')
   if (!p) return next(new Error('unauthorized'))

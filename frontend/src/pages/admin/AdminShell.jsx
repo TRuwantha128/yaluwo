@@ -36,7 +36,7 @@ export default function AdminShell({ children }) {
       <aside className="border-b border-line bg-surface lg:sticky lg:top-0 lg:h-screen lg:border-b-0 lg:border-r">
         <div className="flex items-center justify-between px-5 py-4">
           <Logo />
-          <span className="rounded-full bg-ink px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-bg">Admin</span>
+          <span className="rounded-full bg-ink px-2 py-0.5 text-[10px] font-bold text-bg">Admin</span>
         </div>
         <nav className="scrollbar-none flex gap-1 overflow-x-auto px-3 pb-3 lg:block lg:space-y-0.5 lg:overflow-visible">
           {NAV.filter((n) => !n[4] || user.isOwner).map(([to, label, Icon, kinds]) => {
@@ -72,7 +72,7 @@ export function AdminLogin() {
     <div className="grid min-h-screen place-items-center bg-bg px-4">
       <div className="w-full max-w-sm rounded-3xl bg-surface p-8 shadow-xl ring-1 ring-line">
         <Logo />
-        <h1 className="mt-6 text-2xl font-extrabold tracking-tight">Admin console</h1>
+        <h1 className="mt-6 text-2xl font-bold tracking-tight">Admin console</h1>
         <p className="mt-1 text-sm text-muted">Password and authenticator code. Sessions end after 30 minutes idle.</p>
         <div className="mt-6"><LoginForm admin /></div>
       </div>
@@ -83,7 +83,7 @@ export function AdminLogin() {
 export const PageTitle = ({ title, text, action }) => (
   <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
     <div>
-      <h1 className="text-2xl font-extrabold tracking-tight md:text-3xl">{title}</h1>
+      <h1 className="text-2xl font-bold tracking-tight md:text-3xl">{title}</h1>
       {text && <p className="mt-1 text-sm text-muted">{text}</p>}
     </div>
     {action}

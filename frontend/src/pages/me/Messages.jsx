@@ -20,7 +20,7 @@ export default function Messages() {
     <div className="wrap pb-8 pt-24">
       <div className="grid h-[calc(100vh-8rem)] gap-4 md:grid-cols-[320px_1fr]">
         <aside className={`min-h-0 overflow-y-auto rounded-3xl bg-surface ring-1 ring-line ${threadId ? 'hidden md:block' : ''}`} data-lenis-prevent>
-          <h1 className="px-5 pb-2 pt-5 text-xl font-extrabold tracking-tight">Messages</h1>
+          <h1 className="px-5 pb-2 pt-5 text-xl font-bold tracking-tight">Messages</h1>
           {threads.length === 0 && <p className="px-5 py-6 text-sm text-muted">Chats start when you ask to join a trip or join a group.</p>}
           <ul>
             {threads.map((t) => (

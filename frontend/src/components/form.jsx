@@ -18,9 +18,9 @@ export function Field({ label, hint, error, children, className = '' }) {
 export function Notice({ tone = 'info', children, className = '' }) {
   const tones = {
     info: 'bg-brand-soft text-ink ring-brand/20',
-    success: 'bg-[color-mix(in_oklab,#16a34a_12%,var(--surface))] ring-[#16a34a]/25',
+    success: 'bg-[color-mix(in_oklab,var(--success)_12%,var(--surface))] ring-[var(--success)]/25',
     warning: 'bg-accent-soft ring-accent/30',
-    danger: 'bg-[color-mix(in_oklab,#dc2626_10%,var(--surface))] ring-[#dc2626]/25',
+    danger: 'bg-[color-mix(in_oklab,var(--danger)_10%,var(--surface))] ring-[var(--danger)]/25',
   }
   const Icon = tone === 'success' ? CheckCircle2 : AlertCircle
   return (
@@ -121,8 +121,8 @@ export function Badge({ children, tone = 'neutral' }) {
     neutral: 'bg-surface-2 text-muted',
     brand: 'bg-brand-soft text-brand',
     accent: 'bg-accent-soft text-accent',
-    success: 'bg-[color-mix(in_oklab,#16a34a_14%,var(--surface))] text-success',
-    danger: 'bg-[color-mix(in_oklab,#dc2626_12%,var(--surface))] text-danger',
+    success: 'bg-[color-mix(in_oklab,var(--success)_14%,var(--surface))] text-success',
+    danger: 'bg-[color-mix(in_oklab,var(--danger)_12%,var(--surface))] text-danger',
   }
   return <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${tones[tone]}`}>{children}</span>
 }

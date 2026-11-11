@@ -34,6 +34,12 @@ export const env = {
           password: process.env.DB_PASSWORD ?? '',
           database: isTest ? process.env.DB_NAME_TEST ?? 'yaluwo_test' : required('DB_NAME'),
         },
+  // Extra website addresses allowed to call the API (comma separated), besides APP_URL.
+  // Example: the *.vercel.app address while the main domain is being set up.
+  corsOrigins: [process.env.APP_URL ?? 'http://localhost:5173', ...(process.env.CORS_ORIGINS ?? '').split(',')].map((x) => x.trim().replace(/\/$/, '')).filter(Boolean),
+  // 'strict' when the website and the API share a site (tharinduruwantha.dev and api.tharinduruwantha.dev).
+  // 'none' only if they are on unrelated domains (some browsers then block the login cookie).
+  cookieSameSite: ['strict', 'lax', 'none'].includes(process.env.COOKIE_SAMESITE) ? process.env.COOKIE_SAMESITE : 'strict',
   jwtSecret: required('JWT_SECRET', isTest ? 'test-jwt' : undefined),
   refreshSecret: required('REFRESH_SECRET', isTest ? 'test-refresh' : undefined),
   dataKey: toDataKey(required('DATA_KEY', isTest ? '1'.repeat(64) : undefined)),
@@ -46,7 +52,18 @@ export const env = {
     password: process.env.SMTP_PASSWORD ?? '',
     from: process.env.MAIL_FROM ?? 'Yaluwo <no-reply@yaluwo.lk>',
   },
-  smsProvider: process.env.SMS_PROVIDER ?? 'dev',
+  // Email over HTTPS (works on hosts that block SMTP ports, like Render's free plan)
+  resendKey: process.env.RESEND_API_KEY ?? '',
+  brevoKey: process.env.BREVO_API_KEY ?? '',
+  smsProvider: (process.env.SMS_PROVIDER ?? 'dev').toLowerCase(), // dev | notifylk | textlk
+  sms: {
+    userId: process.env.SMS_USER_ID ?? '',
+    apiKey: process.env.SMS_API_KEY ?? '',
+    senderId: process.env.SMS_SENDER_ID ?? '',
+  },
+  // Demo codes: the sign-up code is shown on the page instead of being sent.
+  // On by default on a developer's machine; set DEMO_CODES=true on a hosted demo with no email or SMS yet.
+  demoCodes: process.env.DEMO_CODES ? process.env.DEMO_CODES === 'true' : !isProd && !isTest,
   payhere: {
     mode: process.env.PAYHERE_MODE ?? 'simulate', // simulate | sandbox | live
     merchantId: process.env.PAYHERE_MERCHANT_ID || (process.env.PAYHERE_MODE === 'live' ? '' : 'SIM-MERCHANT'),
@@ -56,8 +73,13 @@ export const env = {
   googleServerKey: process.env.GOOGLE_MAPS_SERVER_KEY ?? '',
 }
 
+env.canEmail = Boolean(env.smtp.host || env.resendKey || env.brevoKey)
+env.canSms = env.smsProvider !== 'dev' && Boolean(env.sms.apiKey)
+if (env.demoCodes && env.payhere.mode === 'live') throw new Error('DEMO_CODES=true is not allowed with live payments')
+
 if (isProd) {
-  if (env.payhere.mode === 'simulate') throw new Error('PAYHERE_MODE=simulate is not allowed in production')
+  // A hosted demo (DEMO_CODES=true) may keep the payment test page; a real launch may not
+  if (env.payhere.mode === 'simulate' && !env.demoCodes) throw new Error('PAYHERE_MODE=simulate is not allowed in production (unless DEMO_CODES=true for a demo)')
   if (/^0+$/.test(env.dataKey) || env.jwtSecret.startsWith('change-me')) throw new Error('Set real secrets before running in production')
 }
 if (!/^[0-9a-f]{64}$/i.test(env.dataKey)) throw new Error('DATA_KEY must be 64 hex characters, or random text of at least 32 characters')

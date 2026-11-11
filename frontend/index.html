@@ -2,12 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="Yaluwo (යාළුවෝ) helps you plan group trips across Sri Lanka: pick a route, fill the seats with verified travellers, share one driver, and pay only your own share." />
     <link rel="canonical" href="https://tharinduruwantha.dev/" />
     <meta name="application-name" content="Yaluwo" />
     <meta name="apple-mobile-web-app-title" content="Yaluwo" />
-    <meta name="theme-color" content="#2e3192" />
+    <meta name="theme-color" content="#15174a" />
 
     <!-- Icons (Google search shows a 48px+ icon next to the site name) -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -20,7 +20,7 @@
     <!-- Link previews (WhatsApp, Facebook, LinkedIn, X) -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Yaluwo" />
-    <meta property="og:title" content="Yaluwo · Travel Sri Lanka together" />
+    <meta property="og:title" content="Yaluwo: travel Sri Lanka together" />
     <meta property="og:description" content="Yaluwo (යාළුවෝ) helps you plan group trips across Sri Lanka: pick a route, fill the seats with verified travellers, share one driver, and pay only your own share." />
     <meta property="og:url" content="https://tharinduruwantha.dev/" />
     <meta property="og:image" content="https://tharinduruwantha.dev/brand/og-image.jpg" />
@@ -29,26 +29,18 @@
     <meta property="og:image:alt" content="Yaluwo: travel Sri Lanka together" />
     <meta property="og:locale" content="en_LK" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Yaluwo · Travel Sri Lanka together" />
+    <meta name="twitter:title" content="Yaluwo: travel Sri Lanka together" />
     <meta name="twitter:description" content="Yaluwo (යාළුවෝ) helps you plan group trips across Sri Lanka: pick a route, fill the seats with verified travellers, share one driver, and pay only your own share." />
     <meta name="twitter:image" content="https://tharinduruwantha.dev/brand/og-image.jpg" />
 
     <!-- Tells Google the site's name is "Yaluwo" (shown above the link in search results) -->
     <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "Yaluwo", "alternateName": ["යාළුවෝ", "Yaluwo Sri Lanka"], "url": "https://tharinduruwantha.dev/"}, {"@context": "https://schema.org", "@type": "Organization", "name": "Yaluwo", "url": "https://tharinduruwantha.dev/", "logo": "https://tharinduruwantha.dev/brand/mark-512.png", "description": "Yaluwo (යාළුවෝ) helps you plan group trips across Sri Lanka: pick a route, fill the seats with verified travellers, share one driver, and pay only your own share."}]</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Plus+Jakarta+Sans:wght@400..800&display=swap" rel="stylesheet" />
-    <title>Yaluwo · Travel Sri Lanka together</title>
+    <title>Yaluwo: travel Sri Lanka together</title>
     <script>
-      // Apply the saved theme before the page paints, so there is no colour flash
+      // Apply light or dark before the page paints, so there is no flash
       try {
-        var t = JSON.parse(localStorage.getItem('yaluwo.theme.v1'))
-        if (t) {
-          var r = document.documentElement
-          r.style.setProperty('--brand', t.brand)
-          r.style.setProperty('--accent', t.accent)
-          r.dataset.mode = t.mode
-        }
+        var m = localStorage.getItem('yaluwo.mode')
+        if (m === 'dark' || m === 'light') document.documentElement.dataset.mode = m
       } catch (e) {}
     </script>
   </head>

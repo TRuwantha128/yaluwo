@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { initials } from '../lib/format'
 
 // Avatar colours follow the theme
-const AVATAR_TONES = ['bg-brand text-on-brand', 'bg-accent text-on-accent', 'bg-brand-strong text-white', 'bg-accent-strong text-white', 'bg-ink text-bg']
+const AVATAR_TONES = ['bg-brand text-on-brand', 'bg-mango text-night', 'bg-lagoon text-night', 'bg-orchid text-white', 'bg-coral text-night']
 
 export function Avatar({ name = '', i = 0, size = 'h-8 w-8 text-xs', ring = true }) {
   return (
@@ -20,33 +20,44 @@ export function EmptySeat({ size = 'h-8 w-8' }) {
   return <span className={`${size} shrink-0 rounded-full border-2 border-dashed border-line bg-surface`} />
 }
 
-export function Eyebrow({ children }) {
-  return <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand">{children}</span>
+// A small marker above a section title: a mango tick and a plain-case label
+export function Eyebrow({ children, light = false }) {
+  return (
+    <span className={`inline-flex items-center gap-2.5 text-sm font-semibold ${light ? 'text-white/80' : 'text-brand'}`}>
+      <span className="h-[3px] w-7 rounded-full bg-accent" />
+      {children}
+    </span>
+  )
 }
 
-// eyebrow is kept for old callers but not shown: the heading speaks for itself
-export function SectionTitle({ title, text, className = '' }) {
+export function SectionTitle({ eyebrow, title, text, className = '', light = false }) {
   return (
     <div className={className}>
-      <h2 className="font-display max-w-3xl text-[clamp(2rem,4.2vw,3.4rem)] font-bold leading-[1.02] tracking-[-0.025em] [font-stretch:90%]">{title}</h2>
-      {text && <p className="mt-4 max-w-[56ch] text-lg leading-relaxed text-muted">{text}</p>}
+      {eyebrow && <Eyebrow light={light}>{eyebrow}</Eyebrow>}
+      <h2 className={`display mt-4 max-w-3xl text-[clamp(1.7rem,3.6vw,2.9rem)] ${light ? 'text-white' : ''}`}>{title}</h2>
+      {text && <p className={`mt-4 max-w-xl text-lg leading-relaxed ${light ? 'text-white/70' : 'text-muted'}`}>{text}</p>}
     </div>
   )
 }
 
-export function Logo({ light = false, className = '' }) {
+// The suitcase from the logo, with the name set in the lettering's sunset gradient
+export function Logo({ light = false, size = 'h-9' }) {
   return (
-    <Link to="/" className={`flex items-center gap-2.5 ${light ? 'text-white' : 'text-ink'} ${className}`} aria-label="Yaluwo home">
-      <img src="/brand/mark-64.png" alt="" width="34" height="34" className="h-[34px] w-[34px] rounded-[10px] shadow-[0_2px_8px_color-mix(in_oklab,var(--night)_18%,transparent)]" />
-      <span className="font-display text-[23px] font-bold tracking-[-0.02em]">yaluwo</span>
+    <Link to="/" className="flex items-center gap-2.5" aria-label="Yaluwo home">
+      {/* On dark surfaces the indigo handle needs a white tile behind it */}
+      <span className={light ? 'rounded-xl bg-white px-1.5 py-1' : ''}><img src="/brand/mark.png" alt="" className={`${light ? 'h-7' : size} w-auto`} /></span>
+      <span className={`font-display text-[1.15rem] font-bold tracking-[-0.04em] ${light ? 'text-white' : 'ink-sunset'}`}>yaluwo</span>
     </Link>
   )
 }
 
+const BTN = 'inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-semibold transition active:translate-y-px disabled:pointer-events-none disabled:opacity-50'
 export const btn = {
-  primary: 'inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 font-semibold text-on-brand shadow-[0_8px_24px_-10px_color-mix(in_oklab,var(--brand-ui)_70%,transparent)] transition hover:bg-brand-strong hover:text-white active:scale-[0.98] disabled:opacity-50',
-  accent: 'inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 font-semibold text-on-accent shadow-[0_8px_24px_-10px_color-mix(in_oklab,var(--accent)_80%,transparent)] transition hover:bg-accent-strong hover:text-white active:scale-[0.98] disabled:opacity-50',
-  ghost: 'inline-flex items-center justify-center gap-2 rounded-full bg-surface px-6 py-3 font-semibold text-ink ring-1 ring-line transition hover:ring-ink/30 active:scale-[0.98] disabled:opacity-50',
+  primary: `${BTN} bg-brand text-on-brand hover:bg-brand-strong hover:text-white`,
+  accent: `${BTN} bg-accent text-on-accent hover:bg-accent-strong`,
+  ghost: `${BTN} bg-surface text-ink ring-1 ring-line hover:ring-ink/40`,
+  // On the dark indigo sections
+  glass: `${BTN} bg-white/10 text-white ring-1 ring-white/25 backdrop-blur hover:bg-white/20`,
 }
 
 // Simple illustrations, tinted with the theme colour, shown until a real photo exists

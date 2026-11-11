@@ -5,7 +5,7 @@ import EmptyTrips from '../components/EmptyTrips'
 import PageHero from '../components/PageHero'
 import { useTrips } from '../hooks/useTrips'
 import { useConfig } from '../config/useConfig'
-import { NEXT_MONTHS } from '../components/Hero'
+import { NEXT_MONTHS } from '../lib/format'
 
 const SORTS = {
   soonest: (a, b) => (a.startDate || '9999').localeCompare(b.startDate || '9999'),

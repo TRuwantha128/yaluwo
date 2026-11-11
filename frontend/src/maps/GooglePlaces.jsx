@@ -89,7 +89,7 @@ function GoogleCard({ place: p }) {
         </div>
         <div className="p-4">
           {p.type && <p className="text-xs font-semibold text-muted">{p.type}</p>}
-          <h3 className="font-extrabold leading-snug tracking-tight">{p.name}</h3>
+          <h3 className="font-bold leading-snug tracking-tight">{p.name}</h3>
           <div className="mt-1.5 flex items-center gap-3 text-xs text-muted">
             {p.rating && (
               <span className="inline-flex items-center gap-1 font-semibold text-ink">

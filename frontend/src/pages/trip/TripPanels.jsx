@@ -11,7 +11,7 @@ const Section = ({ id, title, text, children, action }) => (
   <section id={id} className="scroll-mt-28 rounded-3xl bg-surface p-6 ring-1 ring-line">
     <div className="flex flex-wrap items-start justify-between gap-3">
       <div>
-        <h2 className="text-xl font-extrabold tracking-tight">{title}</h2>
+        <h2 className="text-xl font-bold tracking-tight">{title}</h2>
         {text && <p className="mt-1 text-sm text-muted">{text}</p>}
       </div>
       {action}
@@ -181,7 +181,7 @@ export function BookingPanel({ trip, reload }) {
                             <p className="font-bold">{v.name} <span className="font-normal text-muted">{v.year}</span></p>
                             <p className="text-xs text-muted"><Car className="inline h-3.5 w-3.5" /> {v.type} · {v.seats} seats{v.ac ? ' · A/C' : ''} · from {v.base}</p>
                           </div>
-                          <p className="text-right text-lg font-extrabold">{rs(v.price)}<span className="block text-xs font-normal text-muted">{rs(v.price / trip.members.length)} each</span></p>
+                          <p className="text-right text-lg font-bold">{rs(v.price)}<span className="block text-xs font-normal text-muted">{rs(v.price / trip.members.length)} each</span></p>
                         </div>
                         <div className="mt-3 flex items-center justify-between gap-2">
                           <Link to={`/drivers/${v.driver.id}`} className="text-sm"><PersonChip p={{ firstName: v.driver.firstName, rating: v.driver.rating, reviews: v.driver.reviews, photo: v.driver.photo, verified: true }} /></Link>
@@ -255,7 +255,7 @@ export function DuringTripPanel({ trip, reload }) {
     <Section title="Today" text="Check in at the first pickup. SOS tells your group and Yaluwo where you are.">
       <div className="flex flex-wrap gap-3">
         {trip.checkedIn ? (
-          <span className="inline-flex items-center gap-2 rounded-full bg-[color-mix(in_oklab,#16a34a_14%,var(--surface))] px-5 py-3 font-semibold text-success"><Check className="h-5 w-5" /> Checked in</span>
+          <span className="inline-flex items-center gap-2 rounded-full bg-[color-mix(in_oklab,var(--success)_14%,var(--surface))] px-5 py-3 font-semibold text-success"><Check className="h-5 w-5" /> Checked in</span>
         ) : (
           <button onClick={() => a.run(async () => { await post(`/trips/${trip.code}/checkin`); reload() })} className={btn.primary}><MapPin className="h-5 w-5" /> Check in</button>
         )}

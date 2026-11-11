@@ -27,7 +27,7 @@ export function PartnerDashboard() {
       {d.next && (
         <Link to={d.next.link} className={`group mb-6 flex items-center gap-4 rounded-3xl p-5 ring-1 transition ${d.next.urgent ? 'bg-accent text-on-accent ring-accent' : 'bg-brand-soft ring-brand/20 hover:ring-brand'}`}>
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold uppercase tracking-wider opacity-80">Next step</p>
+            <p className="text-xs font-bold opacity-80">Next step</p>
             <p className="mt-1 text-lg font-bold">{d.next.text}</p>
             {d.next.dueAt && <Countdown to={d.next.dueAt} className={d.next.urgent ? '!text-on-accent' : ''} />}
           </div>
@@ -36,7 +36,7 @@ export function PartnerDashboard() {
       )}
       {d.steps.length > 0 && (
         <section className="mb-8 rounded-3xl bg-surface p-6 ring-1 ring-line">
-          <h2 className="text-lg font-extrabold">Get ready to drive with Yaluwo</h2>
+          <h2 className="text-lg font-bold">Get ready to drive with Yaluwo</h2>
           <ul className="mt-4 space-y-2">
             {d.steps.map((s) => (
               <li key={s.text}><Link to={s.link} className="flex items-center gap-3 rounded-2xl px-3 py-2 hover:bg-surface-2"><Circle className="h-5 w-5 text-muted" /> <span className="flex-1 font-semibold">{s.text}</span><ArrowRight className="h-4 w-4 text-muted" /></Link></li>
@@ -48,20 +48,20 @@ export function PartnerDashboard() {
         {[['Held', ['HELD', 'WAITING_SETTLEMENT', 'FROZEN']], ['Ready', ['READY']], ['Sent to bank', ['APPROVED', 'SENT']], ['Paid', ['PAID']]].map(([label, keys]) => (
           <div key={label} className="rounded-3xl bg-surface p-5 ring-1 ring-line">
             <p className="text-sm text-muted">{label}</p>
-            <p className="mt-1 text-2xl font-extrabold">{rs(keys.reduce((s, k) => s + (d.earnings[k] ?? 0), 0))}</p>
+            <p className="mt-1 text-2xl font-bold">{rs(keys.reduce((s, k) => s + (d.earnings[k] ?? 0), 0))}</p>
           </div>
         ))}
       </div>
       <section className="mt-8 grid gap-6 lg:grid-cols-2">
         <div className="rounded-3xl bg-surface p-6 ring-1 ring-line">
-          <h2 className="text-lg font-extrabold">New requests</h2>
+          <h2 className="text-lg font-bold">New requests</h2>
           {d.requests.length === 0 ? <p className="mt-3 text-sm text-muted">No requests waiting. Find trips near you and send offers.</p> : (
             <ul className="mt-3 space-y-2">{d.requests.map((r) => <li key={r.id}><Link to="/partner/requests" className="flex items-center justify-between rounded-2xl bg-surface-2 px-4 py-3 text-sm"><span><b>{r.trip}</b><span className="block text-muted">{r.startDate} · {rs(r.amount)}</span></span><Countdown to={r.expiresAt} /></Link></li>)}</ul>
           )}
           <Link to="/partner/offers" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:underline">Find trips near you <ArrowRight className="h-4 w-4" /></Link>
         </div>
         <div className="rounded-3xl bg-surface p-6 ring-1 ring-line">
-          <h2 className="text-lg font-extrabold">Upcoming trips</h2>
+          <h2 className="text-lg font-bold">Upcoming trips</h2>
           {d.upcoming.length === 0 ? <p className="mt-3 text-sm text-muted">Nothing booked yet.</p> : (
             <ul className="mt-3 space-y-2">{d.upcoming.map((r) => <li key={r.id} className="flex items-center justify-between rounded-2xl bg-surface-2 px-4 py-3 text-sm"><span><b>{r.trip}</b><span className="block text-muted">{r.startDate} → {r.endDate} · you get {rs(r.net)}</span></span><StatusBadge status={r.tripStatus} /></li>)}</ul>
           )}
@@ -87,7 +87,7 @@ function RequestCard({ b, reload }) {
           <p className="mt-1 flex flex-wrap items-center gap-1 text-sm"><Route className="h-4 w-4 text-brand" /> {b.trip.route.map((s) => `${s.name}${s.nights ? ` (${s.nights}n)` : ''}`).join(' → ')}</p>
         </div>
         <div className="text-right">
-          <p className="text-2xl font-extrabold">{rs(b.amount)}</p>
+          <p className="text-2xl font-bold">{rs(b.amount)}</p>
           <p className="text-xs text-muted">you receive {rs(b.net)} after {rs(b.commission)} commission</p>
           {b.status === 'REQUESTED' && <Countdown to={b.expiresAt} className="text-sm" />}
         </div>
@@ -356,7 +356,7 @@ export function PartnerEarnings() {
     <PartnerShell title="Earnings" text="Each booking moves Held → Ready → Sent to bank → Paid. Payouts become Ready 24 hours after the trip, once the group's money has reached Yaluwo's bank.">
       <section className="rounded-3xl bg-surface p-6 ring-1 ring-line">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-lg font-extrabold">Payout bank account</h2>
+          <h2 className="text-lg font-bold">Payout bank account</h2>
           {account && !adding && <button onClick={() => setAdding(true)} className="text-sm font-semibold text-brand hover:underline">Change</button>}
         </div>
         {account && !adding ? (
@@ -372,7 +372,7 @@ export function PartnerEarnings() {
       </section>
       <section className="mt-6 overflow-hidden rounded-3xl bg-surface ring-1 ring-line">
         <table className="w-full text-sm">
-          <thead className="bg-surface-2 text-left text-xs uppercase tracking-wider text-muted"><tr><th className="px-4 py-3">Trip</th><th className="px-4 py-3">Type</th><th className="hidden px-4 py-3 sm:table-cell">Booking</th><th className="px-4 py-3">You get</th><th className="px-4 py-3">Status</th></tr></thead>
+          <thead className="bg-surface-2 text-left text-xs text-muted"><tr><th className="px-4 py-3">Trip</th><th className="px-4 py-3">Type</th><th className="hidden px-4 py-3 sm:table-cell">Booking</th><th className="px-4 py-3">You get</th><th className="px-4 py-3">Status</th></tr></thead>
           <tbody>
             {payouts.length === 0 && <tr><td colSpan={5} className="px-4 py-8 text-center text-muted">No payouts yet</td></tr>}
             {payouts.map((p) => (

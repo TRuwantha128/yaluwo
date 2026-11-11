@@ -44,7 +44,7 @@ export default function Profile() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-8 px-4 pb-16 pt-28">
-      <h1 className="text-3xl font-extrabold tracking-tight">Your profile</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Your profile</h1>
       {a.error && <Notice tone="danger">{a.error}</Notice>}
 
       <section className="rounded-3xl bg-surface p-6 ring-1 ring-line">
@@ -76,7 +76,7 @@ export default function Profile() {
       </section>
 
       <section className="rounded-3xl bg-surface p-6 ring-1 ring-line">
-        <h2 className="text-xl font-extrabold tracking-tight">Travel style</h2>
+        <h2 className="text-xl font-bold tracking-tight">Travel style</h2>
         <p className="mt-1 text-sm text-muted">Six quick questions. Trips show how well you match the organiser.</p>
         <div className="mt-6 space-y-5">
           {QUIZ.map(([key, label, options]) => (
@@ -98,7 +98,7 @@ export default function Profile() {
       </section>
 
       <section className="rounded-3xl bg-surface p-6 ring-1 ring-line">
-        <h2 className="text-xl font-extrabold tracking-tight">Emergency contact</h2>
+        <h2 className="text-xl font-bold tracking-tight">Emergency contact</h2>
         <p className="mt-1 text-sm text-muted">Needed before your first trip. Told only if you don't mark "Arrived safely" and you opted in.</p>
         <div className="mt-5 grid gap-4 sm:grid-cols-3">
           <Field label="Name"><input value={contact.name} onChange={(e) => setContact({ ...contact, name: e.target.value })} className={input} /></Field>

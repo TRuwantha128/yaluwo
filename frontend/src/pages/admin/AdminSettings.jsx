@@ -46,7 +46,7 @@ function Settings() {
       {d.scheduled.length > 0 && <div className="rounded-3xl bg-accent-soft p-5"><p className="font-bold">Scheduled changes</p>{d.scheduled.map((s) => <p key={`${s.key}${s.version}`} className="text-sm">{s.label}: {JSON.stringify(s.value)} from {new Date(s.effectiveFrom).toLocaleDateString('en-GB')}</p>)}</div>}
       {Object.entries(GROUPS).map(([g, label]) => (
         <section key={g}>
-          <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-muted">{label}</h2>
+          <h2 className="mb-2 text-sm font-bold text-muted">{label}</h2>
           <ul className="space-y-2">{d.settings.filter((s) => s.group === g).map((s) => <SettingRow key={s.key} s={s} notice={d.notice} onSaved={load} />)}</ul>
         </section>
       ))}
@@ -77,7 +77,7 @@ function RateCards() {
           <p className="font-bold">Draft, copied from v{active.version}</p>
           <div className="mt-3 overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="text-left text-xs uppercase text-muted"><tr><th className="py-2">Type</th>{cols.map(([, l]) => <th key={l} className="px-2 py-2">{l}</th>)}</tr></thead>
+              <thead className="text-left text-xs text-muted"><tr><th className="py-2">Type</th>{cols.map(([, l]) => <th key={l} className="px-2 py-2">{l}</th>)}</tr></thead>
               <tbody>{draft.map((r, i) => <tr key={r.vehicleTypeId}><td className="py-1 font-semibold">{r.name}</td>{cols.map(([k]) => <td key={k} className="px-2 py-1"><input value={r[k] ?? ''} onChange={(e) => setDraft(draft.map((x, n) => (n === i ? { ...x, [k]: e.target.value } : x)))} className="h-9 w-24 rounded-lg bg-surface-2 px-2" /></td>)}</tr>)}</tbody>
             </table>
           </div>
@@ -127,7 +127,7 @@ function Lists() {
       </div>
       {lists.map((l) => (
         <section key={l}>
-          <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-muted">{l.replace(/_/g, ' ')}</h2>
+          <h2 className="mb-2 text-sm font-bold text-muted">{l.replace(/_/g, ' ')}</h2>
           <div className="flex flex-wrap gap-2">{d.lookups.filter((x) => x.list === l).map((x) => <button key={x.id} onClick={() => a.run(async () => { await put(`/admin/lookups/${x.id}`, { active: !x.active }); load() })} className={`rounded-full px-3 py-1.5 text-sm font-semibold ${x.active ? 'bg-surface ring-1 ring-line' : 'bg-surface-2 text-muted line-through'}`} title={x.active ? 'Switch off' : 'Switch on'}>{x.label_en}</button>)}</div>
         </section>
       ))}

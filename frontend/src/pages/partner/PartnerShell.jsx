@@ -22,7 +22,7 @@ export default function PartnerShell({ title, text, children, action }) {
       </nav>
       <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">{title}</h1>
+          <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{title}</h1>
           {text && <p className="mt-1 text-muted">{text}</p>}
         </div>
         {action}

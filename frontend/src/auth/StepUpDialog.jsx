@@ -32,7 +32,7 @@ export default function StepUpDialog({ twoStep, onDone }) {
         <span className="grid h-11 w-11 place-items-center rounded-2xl bg-brand-soft text-brand">
           <ShieldCheck className="h-6 w-6" />
         </span>
-        <h2 id="stepup-title" className="mt-4 text-xl font-extrabold tracking-tight">Confirm it's you</h2>
+        <h2 id="stepup-title" className="mt-4 text-xl font-bold tracking-tight">Confirm it's you</h2>
         <p className="mt-1 text-sm text-muted">This action needs your password{twoStep ? ' and the code from your authenticator app' : ''}. It stays confirmed for 5 minutes.</p>
         <label className="mt-5 block text-sm font-semibold">
           Password

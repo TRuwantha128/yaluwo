@@ -59,3 +59,11 @@ export function googleMapsRouteUrl(stops) {
   if (stops.length > 2) params.set('waypoints', stops.slice(1, -1).map(point).join('|'))
   return `https://www.google.com/maps/dir/?${params}`
 }
+// The next 12 months, for "when" pickers
+const monthFmt = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' })
+export const NEXT_MONTHS = Array.from({ length: 12 }, (_, i) => {
+  const d = new Date()
+  d.setDate(1)
+  d.setMonth(d.getMonth() + i)
+  return { value: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`, label: monthFmt.format(d) }
+})

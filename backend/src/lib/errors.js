@@ -14,6 +14,7 @@ export const forbidden = (message = "You can't do this.") => new HttpError(403, 
 export const notFound = (what = 'This') => new HttpError(404, 'NOT_FOUND', `${what} was not found.`)
 export const conflict = (message, extra) => new HttpError(409, 'CONFLICT', message, extra)
 export const tooMany = (message = 'Too many tries. Please wait and try again.') => new HttpError(429, 'TOO_MANY', message)
+export const unavailable = (message = 'This is not available right now.') => new HttpError(503, 'UNAVAILABLE', message)
 export const needStepUp = () => new HttpError(403, 'STEP_UP_REQUIRED', 'Confirm with your password and authenticator code first.')
 
 export function assert(condition, error) {

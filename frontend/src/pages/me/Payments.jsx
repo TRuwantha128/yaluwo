@@ -13,12 +13,12 @@ export default function Payments() {
   if (!data) return <PageLoader />
   return (
     <div className="mx-auto max-w-4xl px-4 pb-16 pt-28">
-      <h1 className="text-3xl font-extrabold tracking-tight">Payments and refunds</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Payments and refunds</h1>
       <p className="mt-1 text-muted">Yaluwo holds your payment until the trip ends, then pays the partners.</p>
 
       <section className="mt-8 overflow-hidden rounded-3xl bg-surface ring-1 ring-line">
         <table className="w-full text-sm">
-          <thead className="bg-surface-2 text-left text-xs uppercase tracking-wider text-muted">
+          <thead className="bg-surface-2 text-left text-xs text-muted">
             <tr><th className="px-4 py-3">Trip</th><th className="px-4 py-3">Amount</th><th className="hidden px-4 py-3 sm:table-cell">Method</th><th className="px-4 py-3">Status</th><th className="px-4 py-3" /></tr>
           </thead>
           <tbody>
@@ -45,7 +45,7 @@ export default function Payments() {
         </table>
       </section>
 
-      <h2 className="mt-12 text-xl font-extrabold tracking-tight">Refunds</h2>
+      <h2 className="mt-12 text-xl font-bold tracking-tight">Refunds</h2>
       <div className="mt-4 space-y-2">
         {data.refunds.length === 0 && <p className="text-sm text-muted">No refunds.</p>}
         {data.refunds.map((x) => (

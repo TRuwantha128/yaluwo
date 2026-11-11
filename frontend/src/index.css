@@ -1,22 +1,21 @@
 @import "tailwindcss";
 
-/* dark: utilities follow the theme panel's Light / Dark switch */
+/* dark: utilities follow the Light / Dark switch */
 @custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
 
 /*
-  Every colour on the site comes from these variables.
-  The theme panel changes --brand and --accent (and light/dark mode),
-  and all shades below are mixed from them automatically.
+  Yaluwo design tokens. Every colour on the site comes from these variables.
+  The palette is the logo's: indigo (the suitcase handle), lagoon and mango
+  (the two halves of the case) and the orchid-to-coral run of the lettering.
 */
 @theme inline {
-  --color-brand: var(--brand-ui);
-  --color-brand-strong: color-mix(in oklab, var(--brand-ui) 78%, black);
-  --color-brand-soft: color-mix(in oklab, var(--brand-ui) 14%, var(--surface));
-  --color-night: var(--night);
+  --color-brand: var(--brand);
+  --color-brand-strong: color-mix(in oklab, var(--brand) 80%, black);
+  --color-brand-soft: color-mix(in oklab, var(--brand) 9%, var(--surface));
   --color-on-brand: var(--on-brand);
   --color-accent: var(--accent);
-  --color-accent-strong: color-mix(in oklab, var(--accent) 82%, black);
-  --color-accent-soft: color-mix(in oklab, var(--accent) 14%, var(--surface));
+  --color-accent-strong: color-mix(in oklab, var(--accent) 86%, black);
+  --color-accent-soft: color-mix(in oklab, var(--accent) 16%, var(--surface));
   --color-on-accent: var(--on-accent);
   --color-bg: var(--bg);
   --color-surface: var(--surface);
@@ -24,16 +23,29 @@
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);
-  --color-success: #16a34a;
-  --color-danger: #dc2626;
+  --color-night: var(--night);
+  --color-night-2: #1f2268;
+  --color-lagoon: #00aeef;
+  --color-mango: #f68b1f;
+  --color-orchid: #93359b;
+  --color-coral: #ec7a63;
+  --color-success: var(--success);
+  --color-danger: var(--danger);
 
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Bricolage Grotesque", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Onest Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Unbounded Variable", "Onest Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sinhala: "Noto Sans Sinhala Variable", "Iskoola Pota", sans-serif;
 }
 
+/* One shape language: luggage-tag corners. Cards 18px, controls 12px. */
 @theme {
-  --animate-marquee: marquee 50s linear infinite;
-  @keyframes marquee {
+  --radius-xl: 0.625rem;
+  --radius-2xl: 0.75rem;
+  --radius-3xl: 1.125rem;
+  --radius-4xl: 1.75rem;
+
+  --animate-drift: drift 60s linear infinite;
+  @keyframes drift {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
@@ -42,51 +54,111 @@
 :root {
   /* Left/right edge of the page frame (same as .wrap padding), for full-bleed rows */
   --edge: max(clamp(20px, 4.5vw, 72px), calc((100vw - 1600px) / 2 + clamp(20px, 4.5vw, 72px)));
-  /* From the Yaluwo logo: indigo handle, sunset orange and sky blue suitcase */
+  --night: #15174a;
+  --sky: #00aeef;
+}
+
+:root, .nav-pop {
   --brand: #2e3192;
-  --accent: #f5891a;
-  --sky: #03aeef;
+  --accent: #f68b1f;
   --on-brand: #ffffff;
-  --on-accent: #ffffff;
-  /* Neutrals are mixed from the main colour, so every preset gives a matching set */
-  --bg: color-mix(in oklab, var(--brand) 4%, #f7f8fa);
+  --on-accent: #15174a;
+  --bg: #f2f4fb;
   --surface: #ffffff;
-  --surface-2: color-mix(in oklab, var(--brand) 6%, #f2f3f6);
-  --ink: color-mix(in oklab, var(--brand) 24%, #090a12);
-  --muted: color-mix(in oklab, var(--brand) 16%, #5c6070);
-  --line: color-mix(in oklab, var(--brand) 9%, #e5e7ec);
-  /* Deep shade for dark bands (footer, photo overlays) */
-  --night: color-mix(in oklab, var(--brand) 58%, #04050b);
+  --surface-2: #e8ebf7;
+  --ink: #15174a;
+  --muted: #5b6088;
+  --line: #d8dcee;
   --brand-ui: var(--brand);
+  --success: #0f8a5f;
+  --danger: #cf2e4a;
   color-scheme: light;
 }
 
-[data-mode="dark"] {
-  --bg: color-mix(in oklab, var(--brand) 16%, #06070c);
-  --surface: color-mix(in oklab, var(--brand) 20%, #0d0f16);
-  --surface-2: color-mix(in oklab, var(--brand) 26%, #141722);
-  --ink: color-mix(in oklab, var(--brand) 6%, #f3f4f8);
-  --muted: color-mix(in oklab, var(--brand) 12%, #a0a4b5);
-  --line: color-mix(in oklab, var(--brand) 24%, #22263a);
-  --night: color-mix(in oklab, var(--brand) 42%, #030409);
-  /* Buttons and links lift a little so they stay visible on dark backgrounds */
-  --brand-ui: color-mix(in oklab, var(--brand) 72%, white);
+[data-mode="dark"], [data-mode="dark"] .nav-pop {
+  --brand: #8f95ff;
+  --on-brand: #0e1038;
+  --bg: #0e1038;
+  --surface: #15174a;
+  --surface-2: #1f2268;
+  --ink: #eef0ff;
+  --muted: #a6abd8;
+  --line: #2c3080;
+  --success: #3ccf9a;
+  --danger: #ff7189;
   color-scheme: dark;
 }
+
+/* The navigation bar is always night-indigo glass: inside it, the tokens flip to light-on-dark.
+   Anything that drops down from it (.nav-pop) gets the page's normal tokens back. */
+.nav-dark {
+  --ink: #ffffff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --surface-2: rgba(255, 255, 255, 0.13);
+  --line: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+.nav-pop { color: var(--ink); }
 
 html {
   background: var(--bg);
   color: var(--ink);
-  transition: background-color 0.3s ease;
 }
 body {
   font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 ::selection {
-  background: var(--brand);
-  color: var(--on-brand);
+  background: var(--accent);
+  color: var(--on-accent);
 }
+
+/* Page titles are set in the display face everywhere. Unbounded is wide, so it
+   runs lighter and tighter than the old extra-bold sans it replaces. */
+h1, .display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+h2, h3 { letter-spacing: -0.015em; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* The logo's lettering gradient, for the wordmark and a few earned moments */
+.ink-sunset {
+  background: linear-gradient(100deg, #93359b 0%, #c2478f 38%, #ec7a63 72%, #f6a04b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.bg-sunset { background: linear-gradient(100deg, #93359b 0%, #c2478f 38%, #ec7a63 72%, #f6a04b 100%); }
+
+/* Dusk over the west coast: the home page's sky */
+.sky-dusk {
+  background:
+    radial-gradient(120% 60% at 50% 108%, rgba(246, 139, 31, 0.55) 0%, rgba(236, 122, 99, 0.35) 28%, rgba(147, 53, 155, 0.22) 52%, transparent 72%),
+    linear-gradient(180deg, #0e1038 0%, #15174a 38%, #262a86 100%);
+}
+
+/* Kilometre post: the yellow-and-white stones on Sri Lankan roads */
+.km-post {
+  display: inline-flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0.5rem 0.5rem 0.2rem 0.2rem;
+  font-family: var(--font-display);
+  line-height: 1;
+  text-align: center;
+  box-shadow: 0 6px 0 -2px rgba(0, 0, 0, 0.18);
+}
+.km-post > :first-child { background: #f6c21f; color: #15174a; }
+.km-post > :last-child { background: #ffffff; color: #15174a; }
 
 /* Ticket notches on the trip cards */
 .perforation::before,
@@ -94,14 +166,14 @@ body {
   content: "";
   position: absolute;
   top: 50%;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 9999px;
   background: var(--bg);
   transform: translateY(-50%);
 }
-.perforation::before { left: -11px; }
-.perforation::after { right: -11px; }
+.perforation::before { left: -10px; }
+.perforation::after { right: -10px; }
 
 /* Live weather effects on destination cards */
 .rain {
@@ -117,19 +189,19 @@ body {
 }
 @keyframes mist { from { opacity: 0.35; } to { opacity: 0.85; } }
 
-/* Faint dotted grid behind the hero */
 .dot-grid {
   background-image: radial-gradient(color-mix(in oklab, var(--ink) 12%, transparent) 1px, transparent 1px);
   background-size: 22px 22px;
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
 }
 
+/* Camera studio */
+@keyframes shutter { 0% { opacity: 0.95; } 100% { opacity: 0; } }
+.shutter-flash { animation: shutter 0.45s ease-out forwards; }
+@keyframes scanline { 0% { transform: translateY(-10%); } 100% { transform: translateY(110%); } }
+
 .scrollbar-none { scrollbar-width: none; }
 .scrollbar-none::-webkit-scrollbar { display: none; }
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
-}
 
 /* Page frame: wide on big screens, with side margins that grow with the window */
 @utility wrap {
@@ -139,9 +211,6 @@ body {
   padding-inline: clamp(20px, 4.5vw, 72px);
 }
 
-/* Headings use the display face everywhere (admin and dashboards too) */
-h1, h2 {
-  font-family: var(--font-display);
-  font-stretch: 92%;
-  letter-spacing: -0.022em;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }

@@ -108,7 +108,7 @@ export function PayPanel({ trip }) {
     <section id="pay" className="scroll-mt-28 rounded-3xl bg-surface p-6 ring-1 ring-line">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 className="text-xl font-extrabold tracking-tight">Your share</h2>
+          <h2 className="text-xl font-bold tracking-tight">Your share</h2>
           <p className="mt-1 text-sm text-muted">You pay Yaluwo only your own amount. Yaluwo holds it until the trip ends.</p>
         </div>
         {trip.paymentDueAt && m.balance > 0 && <span className="rounded-full bg-accent-soft px-3 py-1.5 text-sm">Pay by {new Date(trip.paymentDueAt).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })} · <Countdown to={trip.paymentDueAt} /></span>}
@@ -117,7 +117,7 @@ export function PayPanel({ trip }) {
         <div className="rounded-2xl bg-surface-2 p-3"><dt className="text-muted">Your share</dt><dd className="text-lg font-bold">{rs(m.share)}</dd></div>
         <div className="rounded-2xl bg-surface-2 p-3"><dt className="text-muted">Booking fee</dt><dd className="text-lg font-bold">{rs(m.fee)}</dd></div>
         <div className="rounded-2xl bg-surface-2 p-3"><dt className="text-muted">Paid</dt><dd className="text-lg font-bold">{rs(m.credit)}</dd></div>
-        <div className={`rounded-2xl p-3 ${m.balance > 0 ? 'bg-accent-soft' : 'bg-[color-mix(in_oklab,#16a34a_14%,var(--surface))]'}`}><dt className="text-muted">To pay</dt><dd className="text-lg font-bold">{m.balance > 0 ? rs(m.balance) : 'Done'}</dd></div>
+        <div className={`rounded-2xl p-3 ${m.balance > 0 ? 'bg-accent-soft' : 'bg-[color-mix(in_oklab,var(--success)_14%,var(--surface))]'}`}><dt className="text-muted">To pay</dt><dd className="text-lg font-bold">{m.balance > 0 ? rs(m.balance) : 'Done'}</dd></div>
       </dl>
       {m.balance > 0 && trip.status === 'PAYMENT_DUE' && (
         <div className="mt-6">
@@ -166,13 +166,13 @@ export function PaymentTestPage() {
   return (
     <div className="mx-auto max-w-md px-4 pb-16 pt-28">
       <div className="rounded-3xl bg-surface p-6 shadow-xl ring-1 ring-line">
-        <p className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">Test payment · no real money</p>
-        <h1 className="mt-4 text-2xl font-extrabold tracking-tight">PayHere checkout (test mode)</h1>
+        <p className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-xs font-bold text-accent">Test payment · no real money</p>
+        <h1 className="mt-4 text-2xl font-bold tracking-tight">PayHere checkout (test mode)</h1>
         <p className="mt-1 text-sm text-muted">This page replaces PayHere while PAYHERE_MODE=simulate. It sends a correctly signed notice to the server, exactly like PayHere would.</p>
         <dl className="mt-5 space-y-1 text-sm">
           <div className="flex justify-between"><dt className="text-muted">Order</dt><dd className="font-mono">{p.orderId}</dd></div>
           <div className="flex justify-between"><dt className="text-muted">For</dt><dd>{p.tripTitle ?? p.purpose}</dd></div>
-          <div className="flex justify-between text-base"><dt className="font-semibold">Amount</dt><dd className="font-extrabold">{rs(p.amount)}</dd></div>
+          <div className="flex justify-between text-base"><dt className="font-semibold">Amount</dt><dd className="font-bold">{rs(p.amount)}</dd></div>
         </dl>
         {a.error && <Notice tone="danger" className="mt-4">{a.error}</Notice>}
         <div className="mt-6 grid gap-2">
@@ -213,7 +213,7 @@ export function PaymentReturnPage({ cancelled = false }) {
       ) : (
         <div className="rounded-3xl bg-surface p-8 ring-1 ring-line">
           <StatusBadge status={p.status} />
-          <h1 className="mt-4 text-2xl font-extrabold tracking-tight">{p.status === 'PAID' ? 'Payment received' : cancelled || ['CANCELLED', 'FAILED'].includes(p.status) ? 'Payment not completed' : 'Waiting for PayHere…'}</h1>
+          <h1 className="mt-4 text-2xl font-bold tracking-tight">{p.status === 'PAID' ? 'Payment received' : cancelled || ['CANCELLED', 'FAILED'].includes(p.status) ? 'Payment not completed' : 'Waiting for PayHere…'}</h1>
           <p className="mt-2 text-sm text-muted">{p.status === 'PAID' ? `Thank you. ${rs(p.amount)} is held by Yaluwo until the trip ends.` : p.status === 'PENDING' ? 'This can take a few seconds.' : 'No money was taken. You can try again from the trip page.'}</p>
           {p.tripCode && <Link to={`/trips/${p.tripCode}#pay`} className={`${btn.primary} mt-6`}>Back to the trip</Link>}
         </div>

@@ -7,7 +7,7 @@ This is **Phase 1** of the workflow document (v3): accounts and ID checks, trips
 ```
 yaluwo/
   backend/    Node.js + Express API, PostgreSQL (Knex), Socket.IO for live updates
-  frontend/   React 19 + Vite + Tailwind 4 website (motion, Lenis, React Three Fiber)
+  frontend/   React 19 + Vite + Tailwind 4 website (motion, Lenis, React Three Fiber, in-browser face finder for the ID camera)
 ```
 
 ---
@@ -151,6 +151,17 @@ PAYHERE_MERCHANT_ID=  PAYHERE_MERCHANT_SECRET=
 SMTP_HOST=  SMTP_PORT=587  SMTP_USER=  SMTP_PASSWORD=  MAIL_FROM=
 STORAGE_DIR=/var/data/private   (only with a Render disk mounted at /var/data)
 ```
+
+**Sign-up codes on the hosted site** – Render's free plan blocks SMTP ports, so `SMTP_*` cannot send there. Add one of these to the Render environment instead:
+
+```
+RESEND_API_KEY=...        (resend.com; MAIL_FROM must use a domain verified there)   or
+BREVO_API_KEY=...         (brevo.com; MAIL_FROM must be a sender verified there)
+SMS_PROVIDER=notifylk     (or textlk) with SMS_USER_ID, SMS_API_KEY, SMS_SENDER_ID
+DEMO_CODES=true           (demo only: the code is shown on the sign-up page; refused with live payments)
+```
+
+Without an SMS gateway, sign-up asks for the email code only and the mobile number is saved as not confirmed. Without any email service and without `DEMO_CODES`, the sign-up page says that email is not set up, instead of pretending a code was sent.
 
 Make the secrets: `node -e "for (const k of ['JWT_SECRET','REFRESH_SECRET','DATA_KEY','FILE_SECRET']) console.log(k+'='+require('crypto').randomBytes(32).toString('hex'))"`
 

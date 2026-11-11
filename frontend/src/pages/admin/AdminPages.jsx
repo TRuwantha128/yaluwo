@@ -30,7 +30,7 @@ export function AdminToday() {
         if (!items.length) return null
         return (
           <section key={order} className="mb-6">
-            <h2 className="mb-2 text-xs font-bold uppercase tracking-wider text-muted">{label}</h2>
+            <h2 className="mb-2 text-xs font-bold text-muted">{label}</h2>
             <ul className="space-y-2">
               {items.map((i, n) => (
                 <li key={n} className={`flex flex-wrap items-center gap-3 rounded-2xl bg-surface px-4 py-3 ring-1 ${i.kind === 'SOS' ? 'ring-2 ring-danger' : i.overdue ? 'ring-danger/40' : 'ring-line'}`}>
@@ -351,7 +351,7 @@ export function AdminAudit() {
       <PageTitle title="Audit log" text="Every admin action and every view of ID documents. It can't be edited, even in the database." />
       <div className="overflow-x-auto rounded-3xl bg-surface ring-1 ring-line">
         <table className="w-full text-sm">
-          <thead className="bg-surface-2 text-left text-xs uppercase tracking-wider text-muted"><tr><th className="px-4 py-3">When</th><th className="px-4 py-3">Who</th><th className="px-4 py-3">Action</th><th className="px-4 py-3">Target</th><th className="px-4 py-3">Amount</th><th className="px-4 py-3">IP</th></tr></thead>
+          <thead className="bg-surface-2 text-left text-xs text-muted"><tr><th className="px-4 py-3">When</th><th className="px-4 py-3">Who</th><th className="px-4 py-3">Action</th><th className="px-4 py-3">Target</th><th className="px-4 py-3">Amount</th><th className="px-4 py-3">IP</th></tr></thead>
           <tbody>{rows.map((e) => <tr key={e.id} className="border-t border-line"><td className="whitespace-nowrap px-4 py-2">{when(e.at)}</td><td className="px-4 py-2">{e.actor}</td><td className="px-4 py-2 font-mono text-xs">{e.action}</td><td className="px-4 py-2">{e.target}</td><td className="px-4 py-2">{e.amount ? rs(e.amount) : ''}</td><td className="px-4 py-2 text-xs text-muted">{e.ip}</td></tr>)}</tbody>
         </table>
       </div>

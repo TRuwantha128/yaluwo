@@ -9,10 +9,11 @@ import { sendEmail } from './messages.js'
 export const REFRESH_COOKIE = 'ylw_rt'
 const REFRESH_DAYS = 30
 
-const cookieOptions = () => ({
+export const cookieOptions = () => ({
   httpOnly: true,
-  secure: env.isProd,
-  sameSite: 'strict',
+  // SameSite=None is only accepted by browsers together with Secure
+  secure: env.isProd || env.cookieSameSite === 'none',
+  sameSite: env.cookieSameSite,
   path: '/api/v1/auth',
 })
 

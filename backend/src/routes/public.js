@@ -35,6 +35,7 @@ r.get('/config', async (_req, res) => {
     legal: Object.values(latest),
     payments: { mode: env.payhere.mode },
     routes: { google: Boolean(env.googleServerKey) },
+    signup: { emailCode: true, phoneCode: env.canSms || env.demoCodes || env.isTest, demoCodes: env.demoCodes },
     environment: env.isProd ? 'live' : env.isTest ? 'test' : 'local',
   })
 })
