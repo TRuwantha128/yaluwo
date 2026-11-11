@@ -43,7 +43,7 @@ const subscribe = (l) => {
 }
 
 // A place from our list, or a place from Google Maps
-export const pickKey = (p) => (p.id ? `yaluwo:${p.id}` : `google:${p.placeId}`)
+export const pickKey = (p) => (p.id ? `yaluwo:${p.id}` : p.placeId ? `google:${p.placeId}` : `at:${Number(p.lat).toFixed(4)},${Number(p.lng).toFixed(4)}`)
 
 export function toPick(p) {
   return {
@@ -56,6 +56,7 @@ export function toPick(p) {
     kind: p.kind ?? 'city',
     photo: p.photos?.[0]?.sm ?? null,
     district: p.district ?? null,
+    nights: p.nights ?? null,
   }
 }
 
@@ -72,6 +73,11 @@ export const tripPicks = {
     ;[next[i], next[i + dir]] = [next[i + dir], next[i]]
     write(next)
   },
+  add: (p) => {
+    if (!picks.some((x) => x.key === pickKey(p))) write([...picks, toPick(p)])
+  },
+  // Nights at one stop (the first stop is where the trip starts: no nights)
+  setNights: (key, nights) => write(picks.map((x) => (x.key === key ? { ...x, nights: Math.max(0, Math.min(30, nights)) } : x))),
   clear: () => write([]),
   // Replace the picks with a ready-made route (used by the starter routes)
   set: (places) => write(places.map(toPick)),
@@ -83,4 +89,4 @@ export function useTripPicks() {
 
 // Trip stops (the shape CreateTrip uses) from the picks
 export const picksToStops = (list) =>
-  list.map((p, i) => ({ name: p.name, lat: p.lat, lng: p.lng, placeId: p.placeId, kind: p.kind, nights: i === 0 ? 0 : 1 }))
+  list.map((p, i) => ({ name: p.name, lat: p.lat, lng: p.lng, placeId: p.placeId, kind: p.kind, nights: i === 0 ? 0 : (p.nights ?? 1) }))

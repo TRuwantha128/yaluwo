@@ -152,16 +152,20 @@ SMTP_HOST=  SMTP_PORT=587  SMTP_USER=  SMTP_PASSWORD=  MAIL_FROM=
 STORAGE_DIR=/var/data/private   (only with a Render disk mounted at /var/data)
 ```
 
-**Sign-up codes on the hosted site** – Render's free plan blocks SMTP ports, so `SMTP_*` cannot send there. Add one of these to the Render environment instead:
+**Sign-up codes** – while payments are not live (`PAYHERE_MODE` is `simulate` or `sandbox`) the code is also shown on the sign-up page ("Test mode"), so accounts can be made even when the email does not arrive. With `PAYHERE_MODE=live` that stops, and a working sender is required:
 
 ```
-RESEND_API_KEY=...        (resend.com; MAIL_FROM must use a domain verified there)   or
-BREVO_API_KEY=...         (brevo.com; MAIL_FROM must be a sender verified there)
-SMS_PROVIDER=notifylk     (or textlk) with SMS_USER_ID, SMS_API_KEY, SMS_SENDER_ID
-DEMO_CODES=true           (demo only: the code is shown on the sign-up page; refused with live payments)
+MAIL_FROM="Yaluwo <no-reply@your-domain>"   the address must belong to a domain verified with the email service,
+                                            or Gmail and others drop the message
+RESEND_API_KEY=...  or  BREVO_API_KEY=...   email over HTTPS (Render's free plan blocks SMTP ports)
+SMS_PROVIDER=notifylk  (or textlk) with SMS_USER_ID, SMS_API_KEY, SMS_SENDER_ID
 ```
 
-Without an SMS gateway, sign-up asks for the email code only and the mobile number is saved as not confirmed. Without any email service and without `DEMO_CODES`, the sign-up page says that email is not set up, instead of pretending a code was sent.
+Without an SMS gateway, sign-up asks for the email code only.
+
+**Maps and roads** – with no Google key the site uses OpenStreetMap: MapLibre draws the map (tiles from OpenFreeMap), the API gets road distances from an OSRM server and place names from Photon. These public servers are free and fine for a small site. `GOOGLE_MAPS_SERVER_KEY` (API) and `VITE_GOOGLE_MAPS_API_KEY` (website) switch to Google.
+
+**Trip helper (AI)** – set `ANTHROPIC_API_KEY` on Render and the home page shows "Describe the trip, Yaluwo draws it". It costs money per request and is hidden without a key.
 
 Make the secrets: `node -e "for (const k of ['JWT_SECRET','REFRESH_SECRET','DATA_KEY','FILE_SECRET']) console.log(k+'='+require('crypto').randomBytes(32).toString('hex'))"`
 

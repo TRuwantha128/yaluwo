@@ -23,7 +23,8 @@ export default function PicksTray() {
     if (picks.length === 0) setOpen(false)
   }, [picks.length])
 
-  if (pathname.startsWith('/trips/new')) return null
+  // The home page planner and the trip form already show the route
+  if (pathname === '/' || pathname.startsWith('/trips/new')) return null
 
   return (
     <AnimatePresence>

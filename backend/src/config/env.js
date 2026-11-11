@@ -61,9 +61,10 @@ export const env = {
     apiKey: process.env.SMS_API_KEY ?? '',
     senderId: process.env.SMS_SENDER_ID ?? '',
   },
-  // Demo codes: the sign-up code is shown on the page instead of being sent.
-  // On by default on a developer's machine; set DEMO_CODES=true on a hosted demo with no email or SMS yet.
-  demoCodes: process.env.DEMO_CODES ? process.env.DEMO_CODES === 'true' : !isProd && !isTest,
+  // Test codes: the sign-up code is also shown on the sign-up page, so an account can be
+  // made even when the email does not arrive. On while payments are not live (simulate or
+  // sandbox); always off with live payments. DEMO_CODES=false turns it off earlier.
+  demoCodes: process.env.DEMO_CODES ? process.env.DEMO_CODES === 'true' : !isTest && (process.env.PAYHERE_MODE ?? 'simulate') !== 'live',
   payhere: {
     mode: process.env.PAYHERE_MODE ?? 'simulate', // simulate | sandbox | live
     merchantId: process.env.PAYHERE_MERCHANT_ID || (process.env.PAYHERE_MODE === 'live' ? '' : 'SIM-MERCHANT'),
@@ -71,6 +72,13 @@ export const env = {
     checkoutUrl: process.env.PAYHERE_CHECKOUT_URL ?? 'https://sandbox.payhere.lk/pay/checkout',
   },
   googleServerKey: process.env.GOOGLE_MAPS_SERVER_KEY ?? '',
+  // Free road routing and place search on OpenStreetMap data (used when there is no Google key).
+  // The public servers are fine for a small site; run your own for heavy use. Empty turns them off.
+  osrmUrl: (process.env.OSRM_URL ?? 'https://router.project-osrm.org').replace(/\/$/, ''),
+  photonUrl: (process.env.PHOTON_URL ?? 'https://photon.komoot.io').replace(/\/$/, ''),
+  // Trip-planning helper. Without a key the helper is simply not shown on the website.
+  aiKey: process.env.ANTHROPIC_API_KEY ?? '',
+  aiModel: process.env.AI_MODEL ?? 'claude-haiku-5-5',
 }
 
 env.canEmail = Boolean(env.smtp.host || env.resendKey || env.brevoKey)

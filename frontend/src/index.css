@@ -214,3 +214,39 @@ h2, h3 { letter-spacing: -0.015em; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* ---------- The live map (src/maps/LiveMap.jsx) ---------- */
+.ylw-pin {
+  width: 42px;
+  height: 42px;
+  border-radius: 9999px;
+  border: 3px solid #fff;
+  background: var(--night) center / cover no-repeat;
+  box-shadow: 0 6px 16px -4px rgba(21, 23, 74, 0.55);
+  cursor: pointer;
+  transition: width 0.15s, height 0.15s, border-color 0.15s;
+}
+.ylw-pin:hover, .ylw-pin:focus-visible { width: 56px; height: 56px; z-index: 3; }
+.ylw-pin.is-picked { border-color: #f68b1f; width: 50px; height: 50px; z-index: 2; }
+.ylw-stop {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 4px;
+  border-radius: 9999px 9999px 9999px 2px;
+  transform: rotate(-45deg);
+  background: #f68b1f;
+  color: #15174a;
+  font: 700 13px/1 var(--font-display);
+  border: 2px solid #fff;
+  box-shadow: 0 6px 14px -4px rgba(21, 23, 74, 0.6);
+  z-index: 5;
+}
+.ylw-stop { writing-mode: horizontal-tb; }
+.maplibregl-ctrl-group { border-radius: 12px !important; overflow: hidden; }
+.maplibregl-cooperative-gesture-screen { font-family: var(--font-sans); }
+
+/* Home hero: each photo eases in very slowly while it is on screen */
+@keyframes hero-drift { from { transform: scale(1.0); } to { transform: scale(1.07); } }
+.hero-drift { animation: hero-drift 9s ease-out forwards; }

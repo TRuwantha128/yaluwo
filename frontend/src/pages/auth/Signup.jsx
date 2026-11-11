@@ -89,13 +89,12 @@ function CodeField({ channel, label, type, placeholder, value, onChange, proof, 
       </Field>
       {sent && !proof && (
         <div className="mt-3 rounded-2xl bg-surface-2 p-4">
-          {sent.demoCode ? (
-            <p className="mb-3 text-sm">
-              <b>Demo mode.</b> No {channel === 'EMAIL' ? 'email' : 'SMS'} service is connected, so here is your code:{' '}
+          <p className="mb-3 text-sm text-muted">{sent.delivered === false ? <>We could not send the {channel === 'EMAIL' ? 'email' : 'SMS'}.</> : <>Enter the code we sent to <b className="text-ink">{value}</b>. It lasts {sent.minutes ?? 5} minutes.</>}</p>
+          {sent.demoCode && (
+            <p className="mb-3 rounded-xl bg-accent-soft px-3 py-2 text-sm">
+              <b>Test mode.</b> Payments are not live yet, so the code is also shown here:{' '}
               <button type="button" onClick={() => { setCode(sent.demoCode); verify(sent.demoCode) }} className="font-display rounded-lg bg-accent px-2 py-0.5 font-semibold tracking-widest text-on-accent">{sent.demoCode}</button>
             </p>
-          ) : (
-            <p className="mb-3 text-sm text-muted">Enter the code we sent to <b className="text-ink">{value}</b>. It lasts {sent.minutes ?? 5} minutes.</p>
           )}
           <CodeBoxes value={code} onChange={setCode} onComplete={verify} label={`Code sent to ${value}`} />
           {a.busy && <p className="mt-2 flex items-center gap-2 text-sm text-muted"><Loader2 className="h-4 w-4 animate-spin" /> Checking</p>}

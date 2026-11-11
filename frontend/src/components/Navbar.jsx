@@ -8,9 +8,10 @@ import Notifications from './Notifications'
 import { useTheme } from '../theme/ThemeProvider'
 
 const PUBLIC_LINKS = [
+  ['Plan a route', '/#plan'],
   ['Find trips', '/trips'],
   ['Destinations', '/places'],
-  ['What it costs', '/#share'],
+  ['How it works', '/#how'],
   ['Safety', '/#safety'],
   ['For drivers', '/#partners'],
 ]

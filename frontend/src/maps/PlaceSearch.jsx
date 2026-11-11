@@ -3,6 +3,7 @@ import { useMapsLibrary } from '@vis.gl/react-google-maps'
 import { Loader2, MapPin, Search } from 'lucide-react'
 import { MAPS_KEY } from './config'
 import { kindFor, searchPlaces } from '../lib/places'
+import { get } from '../api/client'
 
 // Asks Google Places for suggestions inside Sri Lanka (only when an API key is set)
 function GoogleSuggestions({ query, onResults }) {
@@ -47,6 +48,27 @@ function GoogleSuggestions({ query, onResults }) {
   return null
 }
 
+// Any place in Sri Lanka from OpenStreetMap, through the Yaluwo API (used when there is no Google key)
+function OsmSuggestions({ query, onResults }) {
+  useEffect(() => {
+    if (query.trim().length < 3) {
+      onResults([])
+      return
+    }
+    let cancelled = false
+    const timer = setTimeout(() => {
+      get('/places/search', { q: query.trim() })
+        .then(({ places }) => !cancelled && onResults(places.map((p) => ({ placeId: p.placeId, main: p.name, sub: p.sub, osm: p }))))
+        .catch(() => !cancelled && onResults([]))
+    }, 300)
+    return () => {
+      cancelled = true
+      clearTimeout(timer)
+    }
+  }, [query, onResults])
+  return null
+}
+
 export default function PlaceSearch({ onSelect, placeholder = 'Search a town, beach, park…', className = '' }) {
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
@@ -57,7 +79,7 @@ export default function PlaceSearch({ onSelect, placeholder = 'Search a town, be
   const local = searchPlaces(query, 5).map((p) => ({ key: p.id, main: p.name, sub: `${p.region} Province`, place: p }))
   const fromGoogle = google
     .filter((g) => !local.some((l) => l.main.toLowerCase() === g.main.toLowerCase()))
-    .map((g) => ({ key: g.placeId, main: g.main, sub: g.sub, prediction: g.prediction }))
+    .map((g) => ({ key: g.placeId, main: g.main, sub: g.sub, prediction: g.prediction, osm: g.osm }))
   const options = [...local, ...fromGoogle]
 
   const choose = async (option) => {
@@ -66,6 +88,10 @@ export default function PlaceSearch({ onSelect, placeholder = 'Search a town, be
     if (option.place) {
       const p = option.place
       onSelect({ name: p.name, lat: p.lat, lng: p.lng, placeId: null, kind: p.kind })
+      return
+    }
+    if (option.osm) {
+      onSelect({ name: option.osm.name, lat: option.osm.lat, lng: option.osm.lng, placeId: null, kind: kindFor(option.osm.name) })
       return
     }
     setBusy(true)
@@ -96,7 +122,7 @@ export default function PlaceSearch({ onSelect, placeholder = 'Search a town, be
 
   return (
     <div className={`relative ${className}`}>
-      {MAPS_KEY && <GoogleSuggestions query={query} onResults={setGoogle} />}
+      {MAPS_KEY ? <GoogleSuggestions query={query} onResults={setGoogle} /> : <OsmSuggestions query={query} onResults={setGoogle} />}
       <div className="flex items-center gap-3 rounded-2xl bg-surface px-4 ring-1 ring-line transition focus-within:ring-2 focus-within:ring-brand">
         {busy ? <Loader2 className="h-5 w-5 animate-spin text-brand" /> : <Search className="h-5 w-5 text-muted" />}
         <input
@@ -116,7 +142,7 @@ export default function PlaceSearch({ onSelect, placeholder = 'Search a town, be
 
       {open && query.trim() && (
         <ul className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-2xl bg-surface p-1.5 shadow-xl ring-1 ring-line">
-          {options.length === 0 && <li className="px-3 py-3 text-sm text-muted">No places found{MAPS_KEY ? '' : '. Add a Google Maps key to search every place in Sri Lanka.'}</li>}
+          {options.length === 0 && <li className="px-3 py-3 text-sm text-muted">No places found. Try the nearest town.</li>}
           {options.map((o, i) => (
             <li key={o.key}>
               <button
@@ -134,7 +160,7 @@ export default function PlaceSearch({ onSelect, placeholder = 'Search a town, be
               </button>
             </li>
           ))}
-          {fromGoogle.length > 0 && <li className="px-3 pb-1 pt-2 text-right text-[10px] text-muted">Results by Google</li>}
+          {fromGoogle.length > 0 && <li className="px-3 pb-1 pt-2 text-right text-[10px] text-muted">{MAPS_KEY ? 'Results by Google' : 'More places from OpenStreetMap'}</li>}
         </ul>
       )}
     </div>
